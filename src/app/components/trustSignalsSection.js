@@ -1,5 +1,7 @@
 import React from 'react';
 import { FaLeaf, FaUserMd, FaAppleAlt, FaAward, FaStar, FaShieldAlt, FaBabyCarriage } from 'react-icons/fa';
+import { GiFamilyHouse } from 'react-icons/gi';
+import { MdFamilyRestroom } from "react-icons/md";
 
 const TrustSignal = ({ icon: Icon, title, description }) => (
   <div className="flex flex-col items-center p-4 bg-amber-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
@@ -35,7 +37,7 @@ const TrustSignalsSection = () => {
             description="Made with organic ingredients, free from artificial additives and preservatives."
           />
           <TrustSignal 
-            icon={FaBabyCarriage} 
+            icon={MdFamilyRestroom} 
             title="Suitable for 6 Months and above" 
             description="Perfect, wholesome nutrition that is gentle enough for babies from 6 months to the elderly."
           />

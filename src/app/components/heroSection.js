@@ -92,16 +92,16 @@ const HeroSection = () => {
               </div>
             </div>
             <div className="w-1/2 relative">
-              <div className="relative z-10 rounded-lg overflow-hidden ">
+              <div className="ml-10 relative z-10 rounded-lg overflow-hidden ">
                 <Image
                   src={ragiImage}
                   alt="Happy baby enjoying Mighty Grains"
-                  width={600}
-                  height={400}
+                  width={400}
+                  height={300}
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-amber-200 rounded-full opacity-50"></div>
+              <div className="mr-10 absolute -bottom-6 -right-6 w-48 h-48 bg-amber-200 rounded-full opacity-50"></div>
             </div>
           </div>
         )}
