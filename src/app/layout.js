@@ -99,6 +99,26 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+<meta name="description" content="Discover our traditional South Indian baby food made with sprouted Ragi and 22+ natural ingredients. Pediatrician-approved nutrition for babies 6 months and above. Crafted in Bangalore and available for international shipping."/>
+
+{/* <!-- Facebook Meta Tags --> */}
+<meta property="og:url" content="https://mightygrains.vercel.app/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Mighty Grains - Nourishing Traditions for Little Ones"/>
+<meta property="og:description" content="Discover our traditional South Indian baby food made with sprouted Ragi and 22+ natural ingredients. Pediatrician-approved nutrition for babies 6 months and above. Crafted in Bangalore and available for international shipping."/>
+<meta property="og:image" content="https://mightygrains.vercel.app/ragi-removebg.png"/>
+
+{/* <!-- Twitter Meta Tags --> */}
+<meta name="twitter:card" content="summary_large_image"/>
+<meta property="twitter:domain" content="mightygrains.vercel.app"/>
+<meta property="twitter:url" content="https://mightygrains.vercel.app/"/>
+<meta name="twitter:title" content="Mighty Grains - Nourishing Traditions for Little Ones"/>
+<meta name="twitter:description" content="Discover our traditional South Indian baby food made with sprouted Ragi and 22+ natural ingredients. Pediatrician-approved nutrition for babies 6 months and above. Crafted in Bangalore and available for international shipping."/>
+<meta name="twitter:image" content="https://mightygrains.vercel.app/ragi-removebg.png"/>
+
+{/* <!-- Meta Tags Generated via https://www.opengraph.xyz --> */}
+      </head>
       <body className={poppins.className}>{children}</body>
     </html>
   )
