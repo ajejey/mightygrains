@@ -24,9 +24,9 @@ const CtaSection = () => {
         
         <div className="flex justify-center items-center mb-12">
           <CtaButton 
-            href="https://wa.me/1234567890" 
+            href="https://wa.me/7829288011?text=I'm interested in Mighty Grains products" 
             icon={FaWhatsapp} 
-            text="Join WhatsApp Group" 
+            text="Contact Us" 
             primary={true}
           />
           {/* <CtaButton 

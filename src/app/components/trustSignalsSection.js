@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaLeaf, FaUserMd, FaAppleAlt, FaAward, FaStar, FaShieldAlt } from 'react-icons/fa';
+import { FaLeaf, FaUserMd, FaAppleAlt, FaAward, FaStar, FaShieldAlt, FaBabyCarriage } from 'react-icons/fa';
 
 const TrustSignal = ({ icon: Icon, title, description }) => (
   <div className="flex flex-col items-center p-4 bg-amber-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
@@ -26,7 +26,7 @@ const TrustSignalsSection = () => {
   return (
     <section className="w-full bg-gradient-to-b from-white to-amber-100 py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-amber-800 text-center mb-8">Why Mothers Trust Us</h2>
+        <h2 className="text-3xl font-bold text-amber-800 text-center mb-8">Why Families Trust Us</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <TrustSignal 
@@ -35,9 +35,9 @@ const TrustSignalsSection = () => {
             description="Made with organic ingredients, free from artificial additives and preservatives."
           />
           <TrustSignal 
-            icon={FaUserMd} 
-            title="Expert Approved" 
-            description="Formulated and recommended by leading pediatricians and nutritionists."
+            icon={FaBabyCarriage} 
+            title="Suitable for 6 Months and above" 
+            description="Perfect, wholesome nutrition that is gentle enough for babies from 6 months to the elderly."
           />
           <TrustSignal 
             icon={FaAppleAlt} 

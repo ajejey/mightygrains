@@ -1,26 +1,27 @@
 'use client';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
 
 const testimonials = [
   {
-    quote: "Mighty Grains has been a game-changer for my baby's nutrition. The Sattu Maavu is not only delicious but has also improved my little one's digestion. I'm so grateful for this traditional, wholesome option!",
+    quote: "Very good quality and tasty food products for kids of all ages.. Have been using since more than a year.. My kid loves it.. Thank you Dayani :)",
     author: "Mangalagauri.",
     role: "Mother of 8-month-old",
     rating: 5
   },
   {
-    quote: "I was skeptical at first, but after trying Ragi Huri Hittu, I'm amazed at how much my toddler loves it! It's so versatile and nutritious. Definitely a staple in our pantry now.",
+    quote: "I have purchased Sathu Maavu, Ragi with  almond powder, Ragi with cashew powder, goond barfi from Dayani. She is my go to always for my lil one.",
     author: "Riddhi.",
     role: "Mother of 2-year-old",
     rating: 5
   },
-  {
-    quote: "As a pediatrician, I often recommend Mighty Grains to new mothers. The quality of ingredients and the nutritional balance is exactly what growing babies need.",
-    author: "Dr. Ramya",
-    role: "Pediatrician",
-    rating: 5
-  }
+  // {
+  //   quote: "As a pediatrician, I often recommend Mighty Grains to new mothers. The quality of ingredients and the nutritional balance is exactly what growing babies need.",
+  //   author: "Dr. Ramya",
+  //   role: "Pediatrician",
+  //   rating: 5
+  // }
 ];
 
 const TestimonialCard = ({ quote, author, role, rating }) => (
@@ -95,9 +96,11 @@ const TestimonialSection = () => {
         </div>
         <div className="text-center mt-12">
           <p className="text-amber-700 font-semibold text-lg">Join thousands of satisfied parents!</p>
+          <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}> 
           <button className="mt-4 bg-amber-500 text-white py-2 px-6 rounded-full font-semibold hover:bg-amber-600 transition-colors">
             Try Mighty Grains Today
           </button>
+          </Link>
         </div>
       </div>
     </section>

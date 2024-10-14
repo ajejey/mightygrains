@@ -24,7 +24,7 @@ const HeaderSection = () => {
               <Link href="#contact" className="text-green-700 hover:text-green-600 transition-colors">Contact</Link>
             </nav>
             <button 
-              className="md:hidden text-green-100 focus:outline-none"
+              className="md:hidden text-green-700 focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">

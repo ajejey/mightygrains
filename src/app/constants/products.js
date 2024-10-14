@@ -22,7 +22,8 @@ export const products = [
       name: "Ragi Huri Hittu",
       image: ragiHurihittu,
       shortDescription: "Sprouted Ragi flour for babies 6 months+.",
-      fullDescription: "Ragi Huri Hittu is a nutrient-dense sprouted Ragi flour, specially processed to be easily digestible and packed with essential nutrients for babies 6 months and older.",
+      fullDescription: "Ragi Huri Hittu is an ideal, healthy, and gluten free snack for that mid-morning hunger pangs. Ragi Huri Hittu has received lot of love from toddlers to grandparents! This fresh and yummy pack is abundant in calcium and supplies the essencial amino acids required for your body.",
+      // fullDescription: "Ragi Huri Hittu is a nutrient-dense sprouted Ragi flour, specially processed to be easily digestible and packed with essential nutrients for babies 6 months and older.",
       ingredients: ["Sprouted Ragi"],
       nutritionalFacts: {
         calories: 100,

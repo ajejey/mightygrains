@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaLeaf, FaAward, FaStar, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
 import babyEating from '../assets/images/babyeating.avif'
+import ragiImage from '../assets/images/ragi-removebg.png'
 
 const FeatureBadge = ({ icon: Icon, text }) => (
   <div className="flex items-center bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm">
@@ -31,35 +32,35 @@ const HeroSection = () => {
         {isMobile ? (
           // Mobile View
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-3xl font-bold mb-4 leading-tight">
+            <h1 className="text-3xl font-bold mb-2 leading-tight">
               Nourish Your Baby with <span className="text-amber-600">Sprouted Ragi</span>
             </h1>
             <Image
-              src={babyEating}
+              src={ragiImage}
               alt="Happy baby enjoying Mighty Grains"
               width={300}
               height={200}
-              className="rounded-lg shadow-lg mb-6"
+              className="rounded-lg mb-2"
             />
             <p className="text-lg mb-6">
               Discover traditional South Indian baby food, crafted with love and Ragi.
             </p>
             <div className="flex flex-wrap justify-center gap-2 mb-6">
-              <FeatureBadge icon={FaLeaf} text="100% Natural" />
-              <FeatureBadge icon={FaAward} text="Expert Approved" />
-              <FeatureBadge icon={FaStar} text="4.9/5 Rating" />
+              <FeatureBadge icon={FaLeaf} text="Preservatives free" />
+              <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
+              <FeatureBadge icon={FaStar} text="Suger & Salt free" />
             </div>
             <Link href="#products" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
               Explore Our Products
             </Link>
-            {/* <Link href="#contact" className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
+            <Link  target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`} className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
               Contact Us
-            </Link> */}
-            <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
+            </Link>
+            {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
               <button className="flex items-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition-colors">
                 <FaWhatsapp className="mr-2" /> Contact Us
               </button>
-            </Link>
+            </Link> */}
           </div>
         ) : (
           // Desktop View
@@ -72,28 +73,28 @@ const HeroSection = () => {
                 Discover traditional South Indian baby food, crafted with love and Ragi.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <FeatureBadge icon={FaLeaf} text="100% Natural" />
-                <FeatureBadge icon={FaAward} text="Expert Approved" />
-                <FeatureBadge icon={FaStar} text="4.9/5 Rating" />
+                <FeatureBadge icon={FaLeaf} text="Preservatives free" />
+                <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
+                <FeatureBadge icon={FaStar} text="Free from added Sugar & Salt" />
               </div>
               <div className="flex gap-4">
                 <Link href="#products" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
                   Explore Our Products
                 </Link>
-                {/* <Link href="#contact" className="bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
+                <Link href="#contact" className="bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
                   Contact Us
-                </Link> */}
-                <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
-                  <button className="flex items-center bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full transition-colors">
+                </Link>
+                {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
+                  <button className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
                     <FaWhatsapp className="mr-2" /> Contact Us
                   </button>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div className="w-1/2 relative">
-              <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
+              <div className="relative z-10 rounded-lg overflow-hidden ">
                 <Image
-                  src={babyEating}
+                  src={ragiImage}
                   alt="Happy baby enjoying Mighty Grains"
                   width={600}
                   height={400}
