@@ -31,7 +31,7 @@ const poppins = Poppins({
       siteName: 'Mighty Grains',
       images: [
         {
-          url: 'https://www.mightygrains.in/ragi-removebg.png',
+          url: 'https://www.mightygrains.in/opengraph-image.png',
           width: 1200,
           height: 630,
           alt: 'Mighty Grains products display',
@@ -71,7 +71,7 @@ const poppins = Poppins({
       description: 'Nourish your baby (6 months+) with our sprouted Ragi and Sattumaavu products. 100% natural, pediatrician-approved, made in Bangalore. International shipping available.',
       creator: '@mightygrains',
       images: {
-        url: 'https://www.mightygrains.in/ragi-removebg.png',
+        url: 'https://www.mightygrains.in/twitter-image.png',
         alt: 'Mighty Grains product range',
       },
     },
