@@ -2,27 +2,8 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
+import { testimonials } from '../constants/products';
 
-const testimonials = [
-  {
-    quote: "Very good quality and tasty food products for kids of all ages.. Have been using since more than a year.. My kid loves it.. Thank you Dayani :)",
-    author: "Mangalagauri.",
-    role: "Mother of 8-month-old",
-    rating: 5
-  },
-  {
-    quote: "I have purchased Sathu Maavu, Ragi with  almond powder, Ragi with cashew powder, goond barfi from Dayani. She is my go to always for my lil one.",
-    author: "Riddhi.",
-    role: "Mother of 2-year-old",
-    rating: 5
-  },
-  // {
-  //   quote: "As a pediatrician, I often recommend Mighty Grains to new mothers. The quality of ingredients and the nutritional balance is exactly what growing babies need.",
-  //   author: "Dr. Ramya",
-  //   role: "Pediatrician",
-  //   rating: 5
-  // }
-];
 
 const TestimonialCard = ({ quote, author, role, rating }) => (
   <div className="bg-white rounded-lg shadow-lg p-6 mx-4 mb-8 transition-all duration-300 hover:shadow-xl">
@@ -71,7 +52,7 @@ const TestimonialSection = () => {
           {isSmallScreen ? (
             <TestimonialCard {...testimonials[currentTestimonial]} />
           ) : (
-            <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-center">
               {testimonials.map((testimonial, index) => (
                 <TestimonialCard key={index} {...testimonial} />
               ))}

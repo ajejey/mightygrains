@@ -35,11 +35,11 @@ export default function Home() {
       {/* Testimonial Section */}
       <TestimonialSection />
 
-      {/* CTA Section */}
-      <CtaSection />
-
       {/* About us Section */}
       <AboutUsSection />
+
+      {/* CTA Section */}
+      <CtaSection />
 
       <FooterSection />
     </main>

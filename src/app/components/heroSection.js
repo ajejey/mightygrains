@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { FaLeaf, FaAward, FaStar, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
 import babyEating from '../assets/images/babyeating.avif'
 import ragiImage from '../assets/images/ragi-removebg.png'
+import { CtaButton } from '../constants/ctaButton';
+import whatsappButton from '../assets/images/whatsappButton.png'
 
 const FeatureBadge = ({ icon: Icon, text }) => (
   <div className="flex items-center bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm">
@@ -53,8 +55,13 @@ const HeroSection = () => {
             <Link href="#products" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
               Explore Our Products
             </Link>
-            <Link  target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`} className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
-              Contact Us
+            <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
+              <Image
+                src={whatsappButton}
+                alt="Whatsapp Button"
+                width={200}
+                className='w-full'
+              />
             </Link>
             {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
               <button className="flex items-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition-colors">
@@ -79,11 +86,20 @@ const HeroSection = () => {
               </div>
               <div className="flex gap-4">
                 <Link href="#products" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
-                  Explore Our Products
+                  Explore Products
                 </Link>
-                <Link href="#contact" className="bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
+                <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
+                  <Image
+                    src={whatsappButton}
+                    alt="Whatsapp Button"
+                    width={200}
+                    className='w-full'
+                  />
+                </Link>
+                {/* <CtaButton href="https://wa.me/7829288011?text=I'm interested in Mighty Grains products" icon={FaWhatsapp} text="Contact Us" primary={true} /> */}
+                {/* <Link href="#contact" className="bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
                   Contact Us
-                </Link>
+                </Link> */}
                 {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
                   <button className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
                     <FaWhatsapp className="mr-2" /> Contact Us
