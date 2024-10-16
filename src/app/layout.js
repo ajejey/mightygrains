@@ -77,7 +77,7 @@ const poppins = Poppins({
       },
     },
     verification: {
-      // google: 'google-site-verification-code',
+      google: 'LgcU2T6ZKqKdHZMC6rtrQajvPuX-Y7W-aqHpb0ya1hs',
       other: {
         me: ['mailto:dayani.prasad@gmail.com', 'https://www.mightygrains.in'],
       },
@@ -96,6 +96,7 @@ const poppins = Poppins({
       ]
     }
   }
+  // <meta name="google-site-verification" content="LgcU2T6ZKqKdHZMC6rtrQajvPuX-Y7W-aqHpb0ya1hs" />
 
   export const viewport = {
     width: "device-width",
