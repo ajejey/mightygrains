@@ -30,7 +30,7 @@ const HeroSection = () => {
 
   return (
     <section className="w-full bg-gradient-to-b from-amber-50 to-white text-amber-900">
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 py-6 md:py-24">
         {isMobile ? (
           // Mobile View
           <div className="flex flex-col items-center text-center">

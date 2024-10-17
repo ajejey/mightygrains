@@ -4,7 +4,7 @@ import sattuMaavuPack from '../assets/images/sattuMaavuPack-removebg.png'
 export const products = [
     {
       id: 1,
-      name: "Sattu Maavu",
+      name: "Sprouted Sattu Maavu",
       image: sattuMaavuPack,
       shortDescription: "A nutritious blend for growing babies.",
       fullDescription: "Sattu Maavu is a carefully crafted blend of Ragi, millets, nuts, and 22+ ingredients, perfect for supporting the growth and development of babies and young children.",
@@ -19,9 +19,9 @@ export const products = [
     },
     {
       id: 2,
-      name: "Ragi Huri Hittu",
+      name: "Sprouted Ragi Huri Hittu",
       image: ragiHurihittu,
-      shortDescription: "Sprouted Ragi flour for babies 6 months+.",
+      shortDescription: "Popped Ragi flour for babies 6 months+.",
       fullDescription: "Ragi Huri Hittu is an ideal, healthy, and gluten free snack for that mid-morning hunger pangs. Ragi Huri Hittu has received lot of love from toddlers to grandparents! This fresh and yummy pack is abundant in calcium and supplies the essential amino acids required for your body.",
       // fullDescription: "Ragi Huri Hittu is a nutrient-dense sprouted Ragi flour, specially processed to be easily digestible and packed with essential nutrients for babies 6 months and older.",
       ingredients: ["Sprouted Ragi"],
@@ -39,7 +39,7 @@ export const products = [
     {
       quote: "Very good quality and tasty food products for kids of all ages.. Have been using since more than a year.. My kid loves it.. Thank you Dayani :)",
       author: "Mangalagauri.",
-      role: "Mother of 8-month-old",
+      role: "Mother of 2-year-old",
       rating: 5
     },
     {
@@ -51,7 +51,7 @@ export const products = [
     {
       quote: "Whenever I want to prepare Ragi Laddo,mighty grains Ragi powder comes handy to me with an amazing quality and it is highly nutritious. Dayani takes care of the quality of the ingredients and prepares with utmost love ❤️ I wish you all the very best dear. Keep growing and Keep motivating 🤩",
       author: "Akki.",
-      role: "Mother",
+      role: "",
       rating: 5
     },
     {
