@@ -3,14 +3,19 @@ import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
 import { testimonials } from '../constants/products';
+import { FcGoogle } from "react-icons/fc";
 
 
 const TestimonialCard = ({ quote, author, role, rating }) => (
   <div className="bg-white rounded-lg shadow-lg p-6 mx-4 mb-8 transition-all duration-300 hover:shadow-xl">
-    <div className="flex justify-center mb-4">
-      {[...Array(rating)].map((_, i) => (
+    <div className="flex justify-between mb-6">
+      <FcGoogle className='text-2xl' />
+      <div className='flex justify-center'>
+        {[...Array(rating)].map((_, i) => (
         <FaStar key={i} className="text-yellow-400 text-xl" />
       ))}
+      </div>      
+      <FcGoogle className='text-2xl opacity-0' />      
     </div>
     <FaQuoteLeft className="text-amber-500 text-4xl mb-4" />
     <blockquote className="text-lg italic text-amber-700 mb-4">
