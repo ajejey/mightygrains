@@ -50,7 +50,7 @@ const HeroSection = () => {
             <div className="flex flex-wrap justify-center gap-2 mb-6">
               <FeatureBadge icon={FaLeaf} text="Preservatives free" />
               <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
-              <FeatureBadge icon={FaStar} text="Suger & Salt free" />
+              <FeatureBadge icon={FaStar} text="Sugar & Salt free" />
             </div>
             <Link href="#products" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
               Explore Our Products

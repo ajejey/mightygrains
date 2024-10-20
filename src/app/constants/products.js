@@ -50,7 +50,7 @@ export const products = [
     },
     {
       quote: "Whenever I want to prepare Ragi Laddo,mighty grains Ragi powder comes handy to me with an amazing quality and it is highly nutritious. Dayani takes care of the quality of the ingredients and prepares with utmost love ❤️ I wish you all the very best dear. Keep growing and Keep motivating 🤩",
-      author: "Akki.",
+      author: "Akanksha.",
       role: "",
       rating: 5
     },
