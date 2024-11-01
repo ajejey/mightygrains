@@ -11,7 +11,7 @@ export const metadata = {
       siteName: 'Mighty Grains',
       images: [
         {
-          url: 'https://www.mightygrains.in/about-page-image.jpg', // Replace with your actual image URL
+          url: 'https://www.mightygrains.in/opengraph-image.png', 
           width: 1200,
           height: 630,
           alt: 'Mighty Grains About Us',
@@ -25,7 +25,7 @@ export const metadata = {
       title: 'About Mighty Grains | Traditional South Indian Baby Food',
       description: 'Learn about our mission to provide nutritious, traditional South Indian baby food. Discover our story and commitment to natural ingredients.',
       images: {
-        url: 'https://www.mightygrains.in/about-page-twitter-image.jpg', // Replace with your actual image URL
+        url: 'https://www.mightygrains.in/twitter-image.png', 
         alt: 'Mighty Grains About Us',
       },
     },

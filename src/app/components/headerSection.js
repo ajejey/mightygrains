@@ -36,7 +36,7 @@ const HeaderSection = () => {
           {isMenuOpen && (
             <div className="md:hidden">
               <Link href="#products" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Products</Link>
-              <Link href="#about" className="block py-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
+              <Link href="/about" className="block py-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
               <Link href="#contact" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
             </div>
           )}
