@@ -2,6 +2,8 @@
 import { Poppins } from 'next/font/google';
 import './globals.css'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import CtaSection from './components/ctaSection';
+import FooterSection from './components/footerSection';
 
 const poppins = Poppins({ 
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -108,7 +110,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GoogleAnalytics gaId="G-DJF4L757YF" />
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        {children}
+        <CtaSection />
+
+<FooterSection />
+        </body>
     </html>
   )
 }

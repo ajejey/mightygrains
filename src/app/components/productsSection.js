@@ -9,6 +9,7 @@ const ProductCard = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
 
   return (
+    <Link href={`/products/${product.id}`}>
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
       <Image
         src={product.image}
@@ -74,6 +75,7 @@ const ProductCard = ({ product }) => {
         </Link>
       </div>
     </div>
+    </Link>
   );
 };
 

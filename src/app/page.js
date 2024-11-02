@@ -39,9 +39,9 @@ export default function Home() {
       <AboutUsSection />
 
       {/* CTA Section */}
-      <CtaSection />
+      {/* <CtaSection />
 
-      <FooterSection />
+      <FooterSection /> */}
     </main>
   )
 }

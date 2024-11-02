@@ -2,10 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaLeaf, FaAward, FaStar, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
-import babyEating from '../assets/images/babyeating.avif'
+import { FaLeaf, FaAward, FaStar, } from 'react-icons/fa';
 import ragiImage from '../assets/images/ragi-removebg.png'
-import { CtaButton } from '../constants/ctaButton';
 import whatsappButton from '../assets/images/whatsappButton.png'
 
 const FeatureBadge = ({ icon: Icon, text }) => (
