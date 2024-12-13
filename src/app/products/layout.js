@@ -54,7 +54,7 @@ export const metadata = {
 const layout = ({ children }) => {
   return (
     <div>
-        <HeaderSection />
+        {/* <HeaderSection /> */}
         {children}
     </div>
   )

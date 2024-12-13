@@ -50,7 +50,7 @@ const HeroSection = () => {
               <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
               <FeatureBadge icon={FaStar} text="Sugar & Salt free" />
             </div>
-            <Link href="#products" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
+            <Link href="/products" className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
               Explore Our Products
             </Link>
             <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>

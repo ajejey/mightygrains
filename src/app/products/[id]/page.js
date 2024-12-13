@@ -12,6 +12,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from 'next/link';
 import ProductCard from '@/app/components/reusableComponents/ProductCard';
+import { useCart } from '@/context/CartContext';
+// import { useCart } from '@/app/context/CartContext';
 
 const NextArrow = ({ onClick }) => (
   <button onClick={onClick} className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all duration-200">
@@ -30,8 +32,11 @@ const ProductPage = ({ params }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
   const [quantity, setQuantity] = useState(1);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [showCartNotification, setShowCartNotification] = useState(false);
   const sliderRef = useRef(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const { addToCart } = useCart();
 
   if (!product) {
     return <div className="text-center py-20 text-2xl text-amber-800">Product not found</div>;
@@ -59,6 +64,20 @@ const ProductPage = ({ params }) => {
     const newQuantity = quantity + change;
     if (newQuantity >= 1) {
       setQuantity(newQuantity);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      setAddingToCart(true);
+      await addToCart(product, quantity);
+      setShowCartNotification(true);
+      setTimeout(() => setShowCartNotification(false), 3000);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add item to cart. Please try again.');
+    } finally {
+      setAddingToCart(false);
     }
   };
 
@@ -174,27 +193,28 @@ const ProductPage = ({ params }) => {
 
               {/* Quantity Selector and Add to Cart */}
               <div className="mb-6 flex items-center space-x-4">
-                {/* <div className="flex items-center border rounded-lg">
+                <div className="flex items-center border rounded-lg">
                   <button
-                    onClick={() => handleQuantityChange(-1)}
-                    className="px-4 py-2 text-green-600 hover:bg-green-50"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   >
                     -
                   </button>
                   <span className="px-4 py-2 border-x">{quantity}</span>
                   <button
-                    onClick={() => handleQuantityChange(1)}
-                    className="px-4 py-2 text-green-600 hover:bg-green-50"
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   >
                     +
                   </button>
-                </div> */}
-                <Link href={`https://wa.me/7829288011?text=I'm interested in ${product.name}`}>
-                <button className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center">
-                  <FaWhatsapp className="mr-2" />
-                  Order on WhatsApp
+                </div>
+                <button
+                  onClick={handleAddToCart}
+                  disabled={addingToCart}
+                  className="flex-1 bg-amber-500 text-white py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
+                >
+                  {addingToCart ? 'Adding...' : 'Add to Cart'}
                 </button>
-                </Link>
               </div>
 
               {/* Quick Info */}
@@ -428,8 +448,37 @@ const ProductPage = ({ params }) => {
           </div>
         </div>
       </div>
+      {showCartNotification && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+          Item added to cart successfully!
+        </div>
+      )}
     </div>
   );
 };
 
 export default ProductPage;
+
+
+
+
+// import { getProductById } from "./actions";
+// import ProductDetails from "./components/ProductDetails";
+
+// const ProductPage = async ({ params }) => {
+//   const product = await getProductById(params.id); 
+
+//   if (!product) {
+//     return <div className="text-center py-20 text-2xl text-amber-800">Product not found</div>;
+//   }
+
+//   return (
+//     <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+//       <div className="max-w-7xl mx-auto">
+//         <ProductDetails product={product} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductPage;

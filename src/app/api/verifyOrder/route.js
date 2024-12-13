@@ -1,34 +1,59 @@
-// import { NextResponse } from "next/server";
-// import crypto from "crypto";
+import { NextResponse } from "next/server";
+import crypto from "crypto";
+import connectDB from "@/lib/db";
+import Order from "@/models/order";
+import Cart from "@/models/cart";
 
-// const generatedSignature = (
-//   razorpayOrderId,
-//   razorpayPaymentId
-// ) => {
-//   const keySecret = process.env.RAZORPAY_TEST_KEY_SECRET;
+const generateSignature = (razorpayOrderId, razorpayPaymentId) => {
+    const keySecret = process.env.RAZORPAY_TEST_KEY_SECRET;
+    return crypto
+        .createHmac("sha256", keySecret)
+        .update(razorpayOrderId + "|" + razorpayPaymentId)
+        .digest("hex");
+};
 
-//   const sig = crypto
-//     .createHmac("sha256", keySecret)
-//     .update(razorpayOrderId + "|" + razorpayPaymentId)
-//     .digest("hex");
-//   return sig;
-// };
+export async function POST(request) {
+    try {
+        await connectDB();
+        const { orderId, razorpayPaymentId, razorpaySignature, userId } = await request.json();
 
-// export async function POST(request) {
-//   const { orderId, razorpayPaymentId, razorpaySignature } =
-//     await request.json();
+        console.log("REQUEST IN VERIFY ORDER API", { orderId, razorpayPaymentId, razorpaySignature, userId });
 
-//   const signature = generatedSignature(orderId, razorpayPaymentId);
-//   if (signature !== razorpaySignature) {
-//     return NextResponse.json(
-//       { message: "payment verification failed", isOk: false },
-//       { status: 400 }
-//     );
-//   }
+        const signature = generateSignature(orderId, razorpayPaymentId);
+        if (signature !== razorpaySignature) {
+            return NextResponse.json(
+                { message: "Payment verification failed", isOk: false },
+                { status: 400 }
+            );
+        }
 
-//   // Probably some database calls here to update order or add premium status to user
-//   return NextResponse.json(
-//     { message: "payment verified successfully", isOk: true },
-//     { status: 200 }
-//   );
-// }
+        console.log("SIGNATURE IN VERIFY ORDER API", signature);
+
+        // Update order status
+        await Order.findOneAndUpdate(
+            { razorpayOrderId: orderId },
+            { 
+                status: 'paid',
+                razorpayPaymentId
+            }
+        );
+
+        console.log("ORDER UPDATED IN VERIFY ORDER API");
+
+        // Clear user's cart after successful payment
+        await Cart.findOneAndDelete({ userId });
+
+        console.log("CART CLEARED IN VERIFY ORDER API");
+
+        return NextResponse.json(
+            { message: "Payment verified successfully", isOk: true },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error('Error verifying payment:', error);
+        return NextResponse.json(
+            { message: "Payment verification failed", isOk: false },
+            { status: 500 }
+        );
+    }
+}

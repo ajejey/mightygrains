@@ -1,8 +1,8 @@
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaLeaf, FaUserMd, FaAppleAlt, FaHistory, FaUtensils, FaAward, FaStar } from 'react-icons/fa'
 import { GiWeightScale } from 'react-icons/gi'
+import TestEmailButton from '@/components/TestEmailButton'
 
 import HeaderSection from './components/headerSection';
 import HeroSection from './components/heroSection';
@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between bg-gray-50">
       {/* Header */}
-      <HeaderSection />
+      {/* <HeaderSection /> */}
      {/* Hero Section */}
       <HeroSection  />
 
@@ -41,7 +41,16 @@ export default function Home() {
       {/* CTA Section */}
       <CtaSection />
 
+      {/* Development Testing Section */}
+      {/* <div className="mt-10 p-6 bg-gray-100 rounded-lg shadow-md">
+        <h2 className="text-xl font-bold mb-4 text-center">
+          Development Tools
+        </h2>
+        <TestEmailButton />
+      </div> */}
+
       {/* <FooterSection /> */}
+      <FooterSection />
     </main>
   )
 }
