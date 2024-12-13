@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
               <p>Troubleshooting Tips:</p>
               <ul className="list-disc list-inside">
                 <li>Ensure you clicked the most recent reset link</li>
-                <li>Check that the link hasn't expired</li>
+                <li>Check that the link hasn&apos;t expired</li>
                 <li>Request a new password reset</li>
               </ul>
             </div>

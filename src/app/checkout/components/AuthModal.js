@@ -176,7 +176,7 @@ export default function AuthModal({
         <div className="text-center mt-4">
           {view === 'login' ? (
             <p>
-              Don't have an account? 
+              Don&apos;t have an account? 
               <button 
                 type="button"
                 onClick={() => setView('signup')}
