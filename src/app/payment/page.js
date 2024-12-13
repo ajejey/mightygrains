@@ -6,9 +6,14 @@ import { useCart } from '@/context/CartContext';
 import OrderSummary from '@/components/payment/OrderSummary';
 import PaymentMethod from '@/components/payment/PaymentMethod';
 import { account } from '@/appwrite/clientConfig';
-import { createOrder, createRazorpayOrder, getUserShippingInfo, verifyRazorpayPayment } from './actions';
+import { 
+  createOrder, 
+  createRazorpayOrder, 
+  getUserShippingInfo, 
+  verifyRazorpayPayment, 
+  sendOrderConfirmationEmailViaService 
+} from './actions';
 import Script from 'next/script';
-import { sendOrderConfirmationEmail } from '@/lib/emailService';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -112,13 +117,30 @@ export default function PaymentPage() {
             // Send order confirmation email
             const sendEmail = async (orderDetails) => {
               try {
-                const emailResult = await sendOrderConfirmationEmail({...orderDetails, email: userShippingInfo.email});
+                console.log('Sending order confirmation email with details:', {
+                  orderId: orderDetails.id,
+                  email: userShippingInfo.email,
+                  totalAmount: orderDetails.total,
+                  itemCount: orderDetails.items.length
+                });
+
+                const emailResult = await sendOrderConfirmationEmailViaService({
+                  ...orderDetails, 
+                  email: userShippingInfo.email
+                });
+
+                console.log('Email sending result:', {
+                  success: emailResult.success,
+                  messageId: emailResult.messageId,
+                  error: emailResult.error
+                });
+
                 if (!emailResult.success) {
-                  console.error('Failed to send confirmation email:', emailResult.error);
-                  // Optionally, you could log this or handle the email sending failure
+                  // Log the error, but don't block the payment process
+                  console.error('Failed to send order confirmation email:', emailResult.error);
                 }
               } catch (error) {
-                console.error('Unexpected error sending email:', error);
+                console.error('Unexpected error in sending order confirmation email:', error);
               }
             }
             sendEmail(orderDetails);

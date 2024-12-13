@@ -201,3 +201,102 @@ export async function getLatestUserOrder(appwriteId) {
     throw new Error(`Failed to retrieve latest order: ${error.message}`);
   }
 }
+
+export async function sendOrderConfirmationEmailViaService(orderDetails) {
+  try {
+    // Ensure all necessary fields are present
+    const completeOrderDetails = {
+      id: orderDetails.id || 'N/A',
+      total: orderDetails.total || 0,
+      status: orderDetails.status || 'Pending',
+      userId: orderDetails.userId || 'Unknown',
+      email: orderDetails.email,
+      items: orderDetails.items || [],
+      shippingAddress: orderDetails.shippingAddress || {}
+    };
+
+    console.log('Sending complete order details:', JSON.stringify(completeOrderDetails, null, 2));
+
+    // Generate JWT token for authentication
+    const token = await generateEmailServiceToken();
+
+    // Send email via external email service
+    console.log('Sending email to URL:', `${process.env.NEXT_PUBLIC_EMAIL_SERVICE_URL}/api/email/order-confirmation`);
+    console.log('Request payload:', JSON.stringify({
+      email: completeOrderDetails.email,
+      orderDetails: completeOrderDetails
+    }, null, 2));
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_EMAIL_SERVICE_URL}/api/email/order-confirmation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        email: completeOrderDetails.email,
+        orderDetails: completeOrderDetails
+      })
+    });
+
+    console.log('Email service response status:', response.status);
+    const responseText = await response.text();
+    console.log('Email service response text:', responseText);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Email service error response:', errorText);
+      throw new Error(`Failed to send order confirmation email: ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log("RESPONSE FROM EMAIL SERVICE", result);
+    return { 
+      success: true, 
+      messageId: result.messageId 
+    };
+  } catch (error) {
+    console.error('Error sending order confirmation email via service:', error);
+    return { 
+      success: false, 
+      error: error.message 
+    };
+  }
+}
+
+// Helper function to generate JWT for email service authentication
+async function generateEmailServiceToken() {
+  try {
+    const payload = {
+      service: 'mighty-grains-order-confirmation',
+      timestamp: Date.now()
+    };
+
+    console.log('Generating email service token with payload:', payload);
+    console.log('Using EMAIL_SERVICE_JWT_SECRET:', 
+      process.env.EMAIL_SERVICE_JWT_SECRET ? 'Secret is set' : 'SECRET IS UNDEFINED'
+    );
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/generate-email-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Token generation failed:', errorText);
+      throw new Error(`Failed to generate email service token: ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log('Token generation response:', result);
+
+    return result.token;
+  } catch (error) {
+    console.error('Error generating email service token:', error);
+    throw error;
+  }
+}
