@@ -286,7 +286,7 @@ async function generateEmailServiceToken() {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
+      const errorText =  await response.clone().text();
       console.error('Token generation failed:', errorText);
       throw new Error(`Failed to generate email service token: ${errorText}`);
     }

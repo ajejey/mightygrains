@@ -21,6 +21,7 @@ export default function PaymentPage() {
   const [loading, setLoading] = useState(true);
   const [userShippingInfo, setUserShippingInfo] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     const fetchShippingInfo = async () => {
@@ -35,8 +36,6 @@ export default function PaymentPage() {
         router.push('/checkout');
       }
     };
-
-    console.log("cart", cart);
 
     // Redirect if cart is empty
     if (cart.items.length === 0) {
@@ -55,10 +54,6 @@ export default function PaymentPage() {
       const session = await account.get();
       console.log("SESSION", session);
 
-      // Calculate total amount
-      const totalAmount = calculateTotalAmount(cart.items);
-      console.log("TOTAL AMOUNT", totalAmount);
-      console.log("CART ITEMS", cart.items);
       // Create order in backend
       const orderResponse = await createRazorpayOrder({
         amount: totalAmount,
@@ -188,12 +183,13 @@ export default function PaymentPage() {
       <div className="grid md:grid-cols-2 gap-8">
         <OrderSummary 
           items={cart.items} 
-          shippingInfo={userShippingInfo} 
+          shippingInfo={userShippingInfo}
+          onTotalCalculated={setTotalAmount}
         />
         <PaymentMethod 
           onPaymentMethodChange={setPaymentMethod}
           onPayNow={handlePayment}
-          totalAmount={calculateTotalAmount(cart.items)}
+          totalAmount={totalAmount}
         />
       </div>
     </div>

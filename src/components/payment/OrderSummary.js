@@ -1,13 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect } from 'react';
 
-export default function OrderSummary({ items, shippingInfo }) {
+export default function OrderSummary({ items, shippingInfo, onTotalCalculated }) {
   const calculateSubtotal = () => {
     return items.reduce((total, item) => 
       total + (item.product.price.amount * item.quantity), 0
     );
   };
+
+  console.log('Shipping Info:', shippingInfo);
 
   const calculateShipping = () => {
     // Example shipping calculation logic
@@ -17,6 +20,12 @@ export default function OrderSummary({ items, shippingInfo }) {
   const calculateTotal = () => {
     return calculateSubtotal() + calculateShipping();
   };
+
+  // Pass total to parent whenever it changes
+  useEffect(() => {
+    const total = calculateTotal();
+    onTotalCalculated(total);
+  }, [items, onTotalCalculated]);
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
@@ -49,28 +58,28 @@ export default function OrderSummary({ items, shippingInfo }) {
       {/* Price Breakdown */}
       <div className="border-t pt-4">
         <div className="flex justify-between mb-2">
-          <p>Subtotal</p>
-          <p>₹{calculateSubtotal().toFixed(2)}</p>
+          <p className="text-gray-600">Subtotal</p>
+          <p className="font-semibold">₹{calculateSubtotal().toFixed(2)}</p>
         </div>
-        <div className="flex justify-between mb-2">
-          <p>Shipping</p>
-          <p>₹{calculateShipping().toFixed(2)}</p>
+        <div className="flex justify-between mb-4">
+          <p className="text-gray-600">Shipping</p>
+          <p className="font-semibold">₹{calculateShipping().toFixed(2)}</p>
         </div>
-        <div className="flex justify-between font-bold text-lg">
-          <p>Total</p>
-          <p>₹{calculateTotal().toFixed(2)}</p>
+        <div className="flex justify-between border-t pt-4">
+          <p className="text-lg font-bold">Total</p>
+          <p className="text-lg font-bold">₹{calculateTotal().toFixed(2)}</p>
         </div>
       </div>
 
       {/* Shipping Information */}
       {shippingInfo && (
         <div className="mt-6 border-t pt-4">
-          <h3 className="text-xl font-semibold mb-4">Shipping Information</h3>
+          <h3 className="font-bold mb-2">Shipping Information</h3>
           <p>{shippingInfo.fullName}</p>
           <p>{shippingInfo.address}</p>
-          <p>{shippingInfo.city}, {shippingInfo.state} {shippingInfo.postalCode}</p>
+          <p>{shippingInfo.city}, {shippingInfo.state} {shippingInfo.pincode}</p>
           <p>{shippingInfo.country}</p>
-          <p>{shippingInfo.phoneNumber}</p>
+          <p>Phone: {shippingInfo.phone}</p>
         </div>
       )}
     </div>
