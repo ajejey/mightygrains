@@ -143,7 +143,7 @@ export default function PaymentPage() {
                 console.error('Unexpected error in sending order confirmation email:', error);
               }
             }
-            sendEmail(orderDetails);
+           await sendEmail(orderDetails);
 
             // Clear cart
             clearCart();
