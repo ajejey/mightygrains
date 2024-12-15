@@ -115,8 +115,9 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <Providers>
           <HeaderSection />
-          {children}
-          
+          <main className="pt-32">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

@@ -92,6 +92,16 @@ const HeaderSection = () => {
   const { cart } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -107,7 +117,9 @@ const HeaderSection = () => {
   }, []);
 
   return (
-    <header className="w-full bg-amber-50 text-green-800 top-0 z-50">
+    <header className={`w-full bg-amber-50 text-green-800 fixed top-0 z-50 transition-shadow duration-300 ${
+      isScrolled ? 'shadow-md' : ''
+    }`}>
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center space-x-2">
@@ -131,14 +143,17 @@ const HeaderSection = () => {
             <CartPreview />
           </div>
 
-          <button 
-            className="md:hidden text-green-700 focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-            </svg>
-          </button>
+          <div className="md:hidden flex items-center space-x-4">
+            <CartPreview />
+            <button 
+              className="text-green-700 focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+              </svg>
+            </button>
+          </div>
         </div>
         
         {/* Mobile menu */}
@@ -152,9 +167,6 @@ const HeaderSection = () => {
             
             <Link href="/about" className="block py-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
             <Link href="/contact" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
-            <div className="py-2">
-              <CartPreview />
-            </div>
           </div>
         )}
       </div>

@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaLeaf, FaAward, FaStar, } from 'react-icons/fa';
-// import ragiImage from '../assets/images/ragi-removebg.png'
-import ragiImage from '../assets/images/standing-brown-paper-zipper-food-packaging.png'
-import whatsappButton from '../assets/images/whatsappButton.png'
+import { FaLeaf, FaAward, FaStar } from 'react-icons/fa';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ragiHurihittu from '../assets/images/ragi-hurihittu.png';
+import sattuMaavuGrains from '../assets/images/sattu-maavu-grains.png';
+import sproutedRagiSeri from '../assets/images/sprouted-ragi-seri.png';
+import sproutedRagiSeriAlmonds from '../assets/images/sprouted-ragi-seri-almonds.png';
 
 const FeatureBadge = ({ icon: Icon, text }) => (
   <div className="flex items-center bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm">
@@ -16,6 +20,7 @@ const FeatureBadge = ({ icon: Icon, text }) => (
 
 const HeroSection = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,22 +32,68 @@ const HeroSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const heroImages = [
+    { src: sproutedRagiSeri, alt: "Sprouted Ragi Seri" },
+    { src: ragiHurihittu, alt: "Ragi Hurihittu" },
+    { src: sattuMaavuGrains, alt: "Sattu Maavu Grains" },
+    { src: sproutedRagiSeriAlmonds, alt: "Sprouted Ragi Seri with Almonds" },
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    fade: true,
+    arrows: false,
+    cssEase: "linear",
+    beforeChange: (_, next) => setCurrentSlide(next),
+    appendDots: dots => (
+      <div className="absolute bottom-4 w-full">
+        <ul className="flex justify-center gap-2"> {dots} </ul>
+      </div>
+    ),
+    customPaging: i => (
+      <button
+        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+          i === currentSlide ? 'bg-amber-600 w-4' : 'bg-amber-300'
+        }`}
+      />
+    ),
+  };
+
   return (
     <section className="w-full bg-gradient-to-b from-amber-50 to-white text-amber-900">
       <div className="max-w-7xl mx-auto px-4 py-6 md:py-24">
         {isMobile ? (
           // Mobile View
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-3xl font-bold mb-2 leading-tight">
+            <h1 className="text-3xl font-bold mb-4 leading-tight">
               Nourish Your Baby with <span className="text-amber-600">Sprouted Ragi</span>
             </h1>
-            <Image
-              src={ragiImage}
-              alt="Happy baby enjoying Mighty Grains"
-              width={400}
-              height={400}
-              className="rounded-lg mb-2"
-            />
+            
+            <div className="w-full max-w-md mb-6">
+              <Slider {...settings}>
+                {heroImages.map((image, index) => (
+                  <div key={index} className="relative">
+                    <div className="relative aspect-square w-full">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        priority={index === 0}
+                        className="object-cover rounded-2xl p-4"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </Slider>
+            </div>
+
             <p className="text-lg mb-6">
               Discover traditional South Indian baby food, crafted with love and Ragi.
             </p>
@@ -51,25 +102,18 @@ const HeroSection = () => {
               <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
               <FeatureBadge icon={FaStar} text="Sugar & Salt free" />
             </div>
-            <Link href="/products" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out">
+            <Link 
+              href="/products" 
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out"
+            >
               Explore Our Products
             </Link>
-            <Link href="#contact" className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
-                  Contact Us
-                </Link>
-            {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
-              <Image
-                src={whatsappButton}
-                alt="Whatsapp Button"
-                width={200}
-                className='w-full'
-              />
-            </Link> */}
-            {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
-              <button className="flex items-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition-colors">
-                <FaWhatsapp className="mr-2" /> Contact Us
-              </button>
-            </Link> */}
+            <Link 
+              href="#contact" 
+              className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out"
+            >
+              Contact Us
+            </Link>
           </div>
         ) : (
           // Desktop View
@@ -87,39 +131,40 @@ const HeroSection = () => {
                 <FeatureBadge icon={FaStar} text="Free from added Sugar & Salt" />
               </div>
               <div className="flex gap-4">
-                <Link href="#products" className="bg-green-600 w-1/2 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                <Link 
+                  href="/products" 
+                  className="bg-green-600 w-1/2 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105"
+                >
                   Explore Products
                 </Link>
-                {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
-                  <Image
-                    src={whatsappButton}
-                    alt="Whatsapp Button"
-                    width={200}
-                    className='w-full'
-                  />
-                </Link> */}
-                {/* <CtaButton href="https://wa.me/7829288011?text=I'm interested in Mighty Grains products" icon={FaWhatsapp} text="Contact Us" primary={true} /> */}
-                <Link href="#contact" className="bg-white w-1/2 hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out">
+                <Link 
+                  href="#contact" 
+                  className="bg-white w-1/2 hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out"
+                >
                   Contact Us
                 </Link>
-                {/* <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}>
-                  <button className="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
-                    <FaWhatsapp className="mr-2" /> Contact Us
-                  </button>
-                </Link> */}
               </div>
             </div>
-            <div className="w-1/2 relative">
-              <div className="ml-10 relative z-10 rounded-lg overflow-hidden ">
-                <Image
-                  src={ragiImage}
-                  alt="Happy baby enjoying Mighty Grains"
-                  width={600}
-                  height={600}
-                  className="object-cover"
-                />
+            
+            <div className="w-1/2">
+              <div className="max-w-2xl mx-auto">
+                <Slider {...settings}>
+                  {heroImages.map((image, index) => (
+                    <div key={index} className="relative">
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          priority={index === 0}
+                          className="object-cover rounded-2xl p-4"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
               </div>
-              <div className="mr-10 absolute -bottom-6 -right-6 w-48 h-48 bg-amber-200 rounded-full opacity-50"></div>
             </div>
           </div>
         )}
@@ -129,67 +174,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
-
-
-
-// import Image from 'next/image'
-// import Link from 'next/link'
-// import React from 'react'
-// import { FaAward, FaLeaf, FaStar } from 'react-icons/fa'
-// import babyEating from '../assets/images/babyeating.avif'
-
-// const HeroSection = () => {
-//   return (
-//     <section className="w-full bg-gradient-to-b from-amber-200 to-white text-white">
-//     <div className="max-w-7xl mx-auto px-4 py-12 md:py-24">
-//       <div className="flex flex-col md:flex-row items-center gap-10">
-//         <div className="md:w-1/2 mb-10 md:mb-0">
-//           <h1 className="text-green-700 text-4xl md:text-5xl font-bold mb-4 leading-tight">
-//             Nourish Your Baby with Sprouted Ragi
-//           </h1>
-//           <p className="text-xl mb-6 text-amber-600">
-//             Discover traditional South Indian baby food, crafted with love and Ragi.
-//           </p>
-//           <div className="flex flex-wrap gap-4 mb-8">
-//             <div className="flex items-center bg-amber-600 bg-opacity-30 text-green-700 rounded-full px-3 py-1">
-//               <FaLeaf className="text-yellow-700 mr-2" />
-//               <span>100% Natural</span>
-//             </div>
-//             <div className="flex items-center bg-amber-600 bg-opacity-30 text-green-700 rounded-full px-3 py-1">
-//               <FaAward className="text-yellow-700 mr-2" />
-//               <span>Pediatrician Approved</span>
-//             </div>
-//             <div className="flex items-center bg-amber-600 bg-opacity-30 text-green-700 rounded-full px-3 py-1">
-//               <FaStar className="text-yellow-700 mr-2" />
-//               <span>4.9/5 Parent Rating</span>
-//             </div>
-//           </div>
-//           <div className="flex flex-col sm:flex-row gap-4">
-//             <Link href="#products" className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105">
-//               Explore Our Products
-//             </Link>
-//             <Link href="#contact" className="bg-transparent hover:bg-green-800 text-green-800 font-semibold hover:text-white py-3 px-6 border border-green-700 hover:border-transparent rounded-full text-center transition duration-300 ease-in-out">
-//               Contact Us
-//             </Link>
-//           </div>
-//         </div>
-//         <div className="md:w-1/2 relative">
-//           <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
-//             <Image
-//               src={babyEating}
-//               alt="Happy baby enjoying Mighty Grains"
-//               width={600}
-//               height={400}
-//               className="object-cover"
-//             />
-//           </div>
-//           <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-green-200 rounded-full opacity-50"></div>
-//         </div>
-//       </div>
-//     </div>
-//   </section>
-//   )
-// }
-
-// export default HeroSection
