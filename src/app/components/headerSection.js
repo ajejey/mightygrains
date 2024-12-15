@@ -9,15 +9,33 @@ import { account } from '@/appwrite/clientConfig';
 const CartPreview = () => {
   const { cart } = useCart();
   const [isHovered, setIsHovered] = useState(false);
+  const cartPreviewRef = React.useRef(null);
 
-  console.log("cart in header ", cart);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartPreviewRef.current && 
+          !cartPreviewRef.current.contains(event.target)) {
+        setIsHovered(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="relative"
+    <div 
+      className="relative"
+      ref={cartPreviewRef}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <Link href="/cart" className="flex items-center space-x-1">
+      <Link 
+        href="/cart" 
+        className="flex items-center space-x-1 relative"
+        onClick={() => setIsHovered(false)}
+      >
         <FaShoppingCart className="text-2xl" />
         {cart.items.length > 0 && (
           <span className="absolute -top-2 -right-2 bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
@@ -28,7 +46,10 @@ const CartPreview = () => {
 
       {/* Cart Preview Popup */}
       {isHovered && cart.items.length > 0 && (
-        <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 p-4">
+        <div 
+          className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 p-4"
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div className="max-h-64 overflow-y-auto">
             {cart.items.map((item) => (
               <div key={item.product.id} className="flex items-center space-x-4 mb-4">
@@ -41,9 +62,9 @@ const CartPreview = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{item.product.name}</p>
+                  <p className="text-sm font-medium line-clamp-1">{item.product.name}</p>
                   <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
-                  <p className="text-sm font-medium">₹{item.product.price.amount * item.quantity}</p>
+                  <p className="text-sm font-medium">₹{(item.product.price.amount * item.quantity).toFixed(2)}</p>
                 </div>
               </div>
             ))}
@@ -51,11 +72,12 @@ const CartPreview = () => {
           <div className="border-t pt-4 mt-4">
             <div className="flex justify-between mb-4">
               <span className="font-medium">Total:</span>
-              <span className="font-medium">₹{cart.total}</span>
+              <span className="font-medium">₹{cart.total.toFixed(2)}</span>
             </div>
             <Link 
               href="/cart" 
               className="w-full bg-green-500 text-white py-2 rounded-lg text-center block hover:bg-green-600 transition-colors"
+              onClick={() => setIsHovered(false)}
             >
               View Cart
             </Link>

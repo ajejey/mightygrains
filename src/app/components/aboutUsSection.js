@@ -75,7 +75,7 @@ const AboutUsSection = () => {
           <p className="text-xl text-amber-800 font-semibold mb-6">
             Join us in nurturing the next generation with the goodness of traditional foods.
           </p>
-          <Link href="#products" >
+          <Link href="/products" >
           <button className="bg-amber-600 text-white py-3 px-8 rounded-full text-lg font-semibold hover:bg-amber-700 transition-colors">
             Explore Our Products
           </button>

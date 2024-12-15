@@ -4,8 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaShoppingCart, FaInfoCircle, FaArrowRight } from 'react-icons/fa';
 import { products } from '../constants/products';
+import ProductCard from './reusableComponents/ProductCard';
 
-const ProductCard = ({ product }) => {
+const ProductCardOne = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
 
   return (

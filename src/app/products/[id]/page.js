@@ -109,13 +109,14 @@ const ProductPage = ({ params }) => {
             <div className="md:w-1/2 p-4">
               <Slider ref={sliderRef} {...settings}>
                 {product.images.map((image, index) => (
-                  <div key={index} className="relative flex items-center justify-center bg-gray-100 rounded-lg">
+                  <div key={index} className="relative aspect-square bg-gray-100 rounded-lg">
                     <Image
                       src={image}
                       alt={`${product.name} - Image ${index + 1}`}
-                      width={400}
-                      height={400}
-                      className="transition-all p-4 mx-auto duration-300 max-h-full max-w-full object-contain"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="p-2 transition-all duration-300 object-cover"
+                      priority={index === 0}
                     />
                   </div>
                 ))}
@@ -125,15 +126,16 @@ const ProductPage = ({ params }) => {
                   <button
                     key={index}
                     onClick={() => handleThumbnailClick(index)}
-                    className={`w-16 h-16 rounded-md overflow-hidden border-2 flex items-center justify-center bg-gray-100 ${selectedImage === index ? 'border-green-500' : 'border-transparent'
-                      }`}
+                    className={`relative w-16 aspect-square rounded-md overflow-hidden border-2 ${
+                      selectedImage === index ? 'border-green-500' : 'border-transparent'
+                    }`}
                   >
                     <Image
                       src={image}
                       alt={`${product.name} - Thumbnail ${index + 1}`}
-                      width={60}
-                      height={60}
-                      className="object-contain"
+                      fill
+                      sizes="60px"
+                      className="object-cover p-1"
                     />
                   </button>
                 ))}
@@ -458,27 +460,3 @@ const ProductPage = ({ params }) => {
 };
 
 export default ProductPage;
-
-
-
-
-// import { getProductById } from "./actions";
-// import ProductDetails from "./components/ProductDetails";
-
-// const ProductPage = async ({ params }) => {
-//   const product = await getProductById(params.id); 
-
-//   if (!product) {
-//     return <div className="text-center py-20 text-2xl text-amber-800">Product not found</div>;
-//   }
-
-//   return (
-//     <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-//       <div className="max-w-7xl mx-auto">
-//         <ProductDetails product={product} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductPage;

@@ -82,7 +82,7 @@ const TestimonialSection = () => {
         </div>
         <div className="text-center mt-12">
           <p className="text-amber-700 font-semibold text-lg">Join thousands of satisfied parents!</p>
-          <Link target='_blank' href={`https://wa.me/7829288011?text=I'm interested in Mighty Grains products`}> 
+          <Link href="/products"> 
           <button className="mt-4 bg-amber-500 text-white py-2 px-6 rounded-full font-semibold hover:bg-amber-600 transition-colors">
             Try Mighty Grains Today
           </button>

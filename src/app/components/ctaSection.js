@@ -19,7 +19,7 @@ const CtaSection = () => {
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-amber-700 mb-6">Join Our Mighty Grains Community!</h2>
         <p className="text-xl text-amber-600 mb-8">
-          Become part of our growing family of health-conscious parents. Get expert advice, share your experiences, and stay updated on the latest in baby nutrition.
+          Become part of our growing family of health-conscious parents.
         </p>
         
         <div className="flex justify-center items-center mb-12">
@@ -37,13 +37,13 @@ const CtaSection = () => {
         </div>
         
         <div className="text-center">
-          <h3 className="text-2xl font-semibold text-amber-700 mb-4">Follow Us for Daily Tips & Recipes</h3>
+          <h3 className="text-2xl font-semibold text-amber-700 mb-4">Follow Us for more!</h3>
           <div className="flex justify-center space-x-6">
-            <Link href="https://www.instagram.com/mighty.grains/" target='_blank' className="text-amber-700 hover:text-amber-200 transition-colors">
-              <FaInstagram size={24} />
+            <Link href="https://www.instagram.com/mighty.grains/" target='_blank' className="text-amber-700 hover:text-amber-800 hover:bg-amber-200 transition-colors rounded-full p-5">
+              <FaInstagram size={36} />
             </Link>
-            <Link href="https://www.facebook.com/p/Mighty-Grains-100070789485341/" className="text-amber-700 hover:text-amber-200 transition-colors">
-              <FaFacebookF size={24} />
+            <Link href="https://www.facebook.com/p/Mighty-Grains-100070789485341/" className="text-amber-700 hover:text-amber-800 hover:bg-amber-200 transition-colors rounded-full p-5">
+              <FaFacebookF size={36} />
             </Link>
           </div>
         </div>

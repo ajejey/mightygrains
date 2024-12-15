@@ -1,17 +1,18 @@
 import SSM from '../SSM.png'
-import ragiHurihittu from '../assets/images/RagiHurihittuPack-removebg.png'
-import sattuMaavuPack from '../assets/images/sattuMaavuPack-removebg.png'
+import ragiHurihittu from '../assets/images/ragi-hurihittu.png'
+// import sattuMaavuPack from '../assets/images/sattuMaavuPack-removebg.png'
+import sattuMaavuPack from '../assets/images/sattu-maavu-grains.png'
 import SproutedSathumaavuFront from '../assets/images/SproutedSathumaavuFront.png'
 import SproutedSathumaavuBack from '../assets/images/SproutedSathuMaavuBack.png'
-import SproutedSathumaavuBackPack from '../assets/images/SproutedSathumaavuBackPack.png'
+// import SproutedSathumaavuBackPack from '../assets/images/SproutedSathumaavuBackPack.png'
 import sproutedRagiSeriFront from '../assets/images/sproutedRagiSeriFront.png'
-import ragiSeriFrontPack from '../assets/images/ragiseri-front-pack.png'
-import ragiSeriBackPack from '../assets/images/ragiseri-back-pack.png'
+import ragiSeriFrontPack from '../assets/images/sprouted-ragi-seri.png'
+// import ragiSeriBackPack from '../assets/images/ragiseri-back-pack.png'
 import sproutedRagiSeri from '../assets/images/SproutedRagiSeri.png'
 import sproutedRagiSeriAlmondsFront from '../assets/images/RagiSeri-AlmondsFront.png'
 import sproutedRagiSeriAlmondsBack from '../assets/images/RagiSeri-AlmondsBack.png'
-import RagiSeriAlmondsBackPack from '../assets/images/ragiseri-almonds-back-pack.png'
-import RagiSeriAlmondsFrontPack from '../assets/images/ragiseri-almonds-front-pack.png'
+// import RagiSeriAlmondsBackPack from '../assets/images/ragiseri-almonds-back-pack.png'
+import RagiSeriAlmondsFrontPack from '../assets/images/sprouted-ragi-seri-almonds.png'
 
 export const products = [
   {
@@ -25,7 +26,7 @@ export const products = [
       unit: "200g"
     },
     image: sattuMaavuPack,
-    images: [sattuMaavuPack, SproutedSathumaavuBackPack, SproutedSathumaavuFront, SproutedSathumaavuBack],
+    images: [sattuMaavuPack, SproutedSathumaavuFront, SproutedSathumaavuBack],
     ingredients: [
       "Sprouted Finger Millet (Ragi)",
       "Sprouted Sorghum (Jowar)",
@@ -144,7 +145,12 @@ export const products = [
     traditions: {
       significance: "Traditional snack with nostalgic value",
       occasions: ["Daily snack", "Festivals", "Special occasions"]
-    }
+    },
+    box_length: "30",
+    box_width: "25",
+    box_height: "10",
+    order_weight: "250"
+
   },
     {
       id: 'ragi-hurihittu',
@@ -284,7 +290,11 @@ export const products = [
       traditions: {
         significance: "Traditional snack with nostalgic value",
         occasions: ["Daily snack", "Festivals", "Special occasions"]
-      }
+      },
+      box_length: "30",
+      box_width: "25",
+      box_height: "10",
+      order_weight: "600"
     },
 
     {
@@ -298,7 +308,7 @@ export const products = [
         unit: "200g"
       },
       image: ragiSeriFrontPack,
-      images: [ragiSeriFrontPack, ragiSeriBackPack, sproutedRagiSeriFront, sproutedRagiSeri],
+      images: [ragiSeriFrontPack, sproutedRagiSeriFront, sproutedRagiSeri],
       ingredients: ["Sprouted Ragi (finger millet)",
           "Green Cardamom (Elaichi)"
       
@@ -404,7 +414,11 @@ export const products = [
       traditions: {
         significance: "Traditional snack with nostalgic value",
         occasions: ["Daily snack", "Festivals", "Special occasions"]
-      }
+      },
+      box_length: "30",
+      box_width: "25",
+      box_height: "10",
+      order_weight: "250"
     },
 
     {
@@ -418,7 +432,7 @@ export const products = [
         unit: "200g"
       },
       image: RagiSeriAlmondsFrontPack,
-      images: [RagiSeriAlmondsFrontPack, RagiSeriAlmondsBackPack, sproutedRagiSeriAlmondsFront, sproutedRagiSeriAlmondsBack],
+      images: [RagiSeriAlmondsFrontPack, sproutedRagiSeriAlmondsFront, sproutedRagiSeriAlmondsBack],
       ingredients: ["Sprouted Ragi (finger millet)",
           "Almonds",
           "Green Cardamom (Elaichi)"
@@ -525,7 +539,11 @@ export const products = [
       traditions: {
         significance: "Traditional snack with nostalgic value",
         occasions: ["Daily snack", "Festivals", "Special occasions"]
-      }
+      },
+      box_length: "30",
+      box_width: "25",
+      box_height: "10",
+      order_weight: "250"
     },
     
   ];

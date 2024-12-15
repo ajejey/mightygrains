@@ -14,7 +14,7 @@ export default function OrderSummary({ items, shippingInfo, onTotalCalculated })
 
   const calculateShipping = () => {
     // Example shipping calculation logic
-    return items.length > 0 ? 50 : 0;
+    return items.length > 0 ? 0 : 0;
   };
 
   const calculateTotal = () => {
