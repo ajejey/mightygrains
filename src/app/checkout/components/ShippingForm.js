@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ALL_STATES_AND_UTS } from '@/utils/indianStates';
 
 export default function ShippingForm({ 
   initialData, 
@@ -39,13 +40,35 @@ export default function ShippingForm({
     pincode: initialData?.userDetails?.defaultShippingAddress?.pincode || '',
   });
 
+  const [stateInput, setStateInput] = useState(initialData?.userDetails?.defaultShippingAddress?.state || '');
+  const [filteredStates, setFilteredStates] = useState([]);
+  const [showStateDropdown, setShowStateDropdown] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    if (name === 'state') {
+      setStateInput(value);
+      setFormData(prev => ({ ...prev, state: value }));
+
+      // Filter states based on input
+      const filtered = ALL_STATES_AND_UTS.filter(state => 
+        state.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredStates(filtered);
+      setShowStateDropdown(true);
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleStateSelect = (state) => {
+    setStateInput(state);
+    setFormData(prev => ({ ...prev, state: state }));
+    setShowStateDropdown(false);
   };
 
   const handleSubmit = (e) => {
@@ -57,15 +80,19 @@ export default function ShippingForm({
 
   useEffect(() => {
     if (initialData) {
-      setFormData({
-        fullName: initialData?.fullName || '',
-        email: initialData?.email || '',
-        phone: initialData?.userDetails?.defaultShippingAddress?.phone || '',
-        address: initialData?.userDetails?.defaultShippingAddress?.address || '',
-        city: initialData?.userDetails?.defaultShippingAddress?.city || '',
-        state: initialData?.userDetails?.defaultShippingAddress?.state || '',
-        pincode: initialData?.userDetails?.defaultShippingAddress?.pincode || '',
-      });
+      const initialState = initialData?.userDetails?.defaultShippingAddress?.state || '';
+      setFormData(prev => ({
+        fullName: initialData?.fullName || prev.fullName,
+        email: initialData?.email || prev.email,
+        phone: initialData?.userDetails?.defaultShippingAddress?.phone || prev.phone,
+        address: initialData?.userDetails?.defaultShippingAddress?.address || prev.address,
+        city: initialData?.userDetails?.defaultShippingAddress?.city || prev.city,
+        state: initialState,
+        pincode: initialData?.userDetails?.defaultShippingAddress?.pincode || prev.pincode,
+      }));
+      
+      // Set state input for autocomplete
+      setStateInput(initialState);
     }
   }, [initialData]);
 
@@ -180,7 +207,7 @@ export default function ShippingForm({
         </div>
 
         {/* State Input - First row */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 relative">
           <label htmlFor="state" className="block text-sm font-medium text-gray-700">
             State
           </label>
@@ -188,16 +215,26 @@ export default function ShippingForm({
             type="text"
             id="state"
             name="state"
-            value={formData.state}
+            value={stateInput}
             onChange={handleChange}
+            onFocus={() => setShowStateDropdown(true)}
+            onBlur={() => setTimeout(() => setShowStateDropdown(false), 200)}
             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 py-2 px-3 
               ${errors.state ? 'border-red-500 text-red-900' : ''}`}
+            autoComplete="off"
           />
-          {initialData?.userDetailsLoading && (
-            <p className="mt-1 text-sm text-gray-600">Loading...</p>
-          )}
-          {errors.state && (
-            <p className="mt-1 text-sm text-red-600">{errors.state}</p>
+          {showStateDropdown && filteredStates.length > 0 && (
+            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+              {filteredStates.map((state, index) => (
+                <div 
+                  key={index} 
+                  onClick={() => handleStateSelect(state)}
+                  className="px-4 py-2 hover:bg-green-50 cursor-pointer text-sm text-gray-700 hover:text-green-800"
+                >
+                  {state}
+                </div>
+              ))}
+            </div>
           )}
         </div>
 

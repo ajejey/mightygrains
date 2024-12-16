@@ -8,7 +8,8 @@ const createTransporter = () => {
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
-    }
+    },
+    from: process.env.SMTP_USER
   });
 };
 
@@ -55,7 +56,7 @@ const sendOrderConfirmationEmail = async (orderDetails) => {
       },
       to: email,
       cc: process.env.SMTP_USER, // CC yourself
-      subject: `Order Confirmation - Order #${id}`,
+      subject: `Mighty Grains - Order Confirmation`,
       html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -159,8 +160,8 @@ const sendOrderConfirmationEmail = async (orderDetails) => {
               <h3>Items Purchased</h3>
               ${transformedItems.map(item => `
                 <div class="item-row">
-                  <span>${item.name}</span>
-                  <span>Qty: ${item.quantity} × ₹${item.price.toFixed(2)}</span>
+                  <div>${item.name}</div>
+                  <div>Qty: ${item.quantity} × ₹${item.price.toFixed(2)}</div>
                 </div>
               `).join('') || '<p>No items found</p>'}
             </div>
