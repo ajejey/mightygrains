@@ -4,9 +4,13 @@ import { revalidatePath } from 'next/cache';
 import connectDB from '@/lib/db';
 import User from '@/models/user';
 import { getUserByAppwriteId, createUserInDatabase } from '@/app/actions';
+import { validatePincode } from '@/utils/pincode';
 
 export async function createShippingInfo(appwriteId, shippingData) {
   try {
+    // Validate pincode
+    const pincodeValidation = await validatePincode(shippingData.pincode);
+    
     // Connect to database
     await connectDB();
 
@@ -25,21 +29,28 @@ export async function createShippingInfo(appwriteId, shippingData) {
       }
     }
 
+    // Create shipping info with withInBangalore flag
+    const shippingInfo = {
+      ...shippingData,
+      withInBangalore: pincodeValidation.isWithinBangalore || false
+    };
+
     // Update user with shipping information
     const updatedUser = await User.findByIdAndUpdate(
       user._id, 
       {
         $set: {
           defaultShippingAddress: {
-            fullName: shippingData.fullName,
-            address: shippingData.address,
-            city: shippingData.city,
-            state: shippingData.state,
-            pincode: shippingData.pincode,
-            phone: shippingData.phone
+            fullName: shippingInfo.fullName,
+            address: shippingInfo.address,
+            city: shippingInfo.city,
+            state: shippingInfo.state,
+            pincode: shippingInfo.pincode,
+            phone: shippingInfo.phone,
+            withInBangalore: shippingInfo.withInBangalore
           },
-          email: shippingData.email || user.email,
-          fullName: shippingData.fullName || user.fullName
+          email: shippingInfo.email || user.email,
+          fullName: shippingInfo.fullName || user.fullName
         }
       }, 
       { new: true, runValidators: true }
@@ -48,14 +59,16 @@ export async function createShippingInfo(appwriteId, shippingData) {
     // Revalidate path
     revalidatePath('/checkout/shipping-info');
 
-    return { 
-      success: true, 
+    // Return validation info along with shipping data
+    return {
+      success: true,
       user: {
         _id: updatedUser._id,
         email: updatedUser.email,
         fullName: updatedUser.fullName,
         defaultShippingAddress: updatedUser.defaultShippingAddress
-      }
+      },
+      pincodeValidation
     };
   } catch (error) {
     console.error('Create shipping info error:', error);

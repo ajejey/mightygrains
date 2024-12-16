@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema({
         city: String,
         state: String,
         pincode: String,
-        phone: String
+        phone: String,
+        withInBangalore: Boolean
     },
     preferences: {
         type: mongoose.Schema.Types.Mixed,

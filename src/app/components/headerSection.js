@@ -5,6 +5,7 @@ import { FaShoppingCart, FaClipboardList } from 'react-icons/fa';
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { account } from '@/appwrite/clientConfig';
+import { useRouter } from 'next/navigation';
 
 const CartPreview = () => {
   const { cart } = useCart();
@@ -90,9 +91,15 @@ const CartPreview = () => {
 
 const HeaderSection = () => {
   const { cart } = useCart();
+  const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -115,6 +122,26 @@ const HeaderSection = () => {
 
     checkLoginStatus();
   }, []);
+
+  const checkUser = async () => {
+    try {
+      const session = await account.get();
+      setUser(session);
+    } catch (error) {
+      console.error('User session error:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession('current');
+      setUser(null);
+      setIsLoggedIn(false);
+      router.push('/'); // Redirect to home page
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <header className={`w-full bg-amber-50 text-green-800 fixed top-0 z-50 transition-shadow duration-300 ${
@@ -140,6 +167,20 @@ const HeaderSection = () => {
               <Link href="/about" className="text-green-700 hover:text-green-600 transition-colors">About Us</Link>
               <Link href="/contact" className="text-green-700 hover:text-green-600 transition-colors">Contact</Link>
             </nav>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={handleLogout}
+                  className="text-green-700 hover:text-red-600 transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link href="/orders" className="text-green-700 hover:text-green-600">
+                Login
+              </Link>
+            )}
             <CartPreview />
           </div>
 
@@ -167,6 +208,18 @@ const HeaderSection = () => {
             
             <Link href="/about" className="block py-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
             <Link href="/contact" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="block py-2 text-gray-600 hover:text-red-600 transition-colors"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link href="/orders" className="block py-2 text-green-700 hover:text-green-600">
+                Login
+              </Link>
+            )}
           </div>
         )}
       </div>

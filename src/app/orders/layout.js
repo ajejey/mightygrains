@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import AuthModal from '@/app/checkout/components/AuthModal';
 import { checkUserSession } from '@/lib/auth-utils';
 import OrdersLoading from './loading';
+import AuthEmailOtpModal from '../checkout/components/AuthEmailOtpModal';
 
 export default function OrdersLayout({ children }) {
   const router = useRouter();
@@ -46,7 +47,8 @@ export default function OrdersLayout({ children }) {
 
   if (showAuthModal) {
     return (
-      <AuthModal 
+      // <AuthModal 
+      <AuthEmailOtpModal 
         onAuthSuccess={handleAuthSuccess} 
         initialEmail=""
       />

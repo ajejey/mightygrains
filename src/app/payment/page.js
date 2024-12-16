@@ -54,7 +54,7 @@ export default function PaymentPage() {
       // Create Razorpay order
       const session = await account.get();
       const orderResponse = await createRazorpayOrder({
-        amount: cart.total,
+        amount: totalAmount || cart.total,
         items: cart.items,
         userId: session.$id,
         shippingAddress: userShippingInfo
@@ -193,6 +193,9 @@ export default function PaymentPage() {
       };
 
       const razorpay = new window.Razorpay(options);
+      razorpay.on('payment.failed', function (response) {
+        console.log("PAYMENT FAILED IN PAYMENT PAGE", response);
+      });
       razorpay.open();
       setLoading(false);
     } catch (error) {

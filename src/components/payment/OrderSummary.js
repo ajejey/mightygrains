@@ -12,20 +12,29 @@ export default function OrderSummary({ items, shippingInfo, onTotalCalculated })
 
   console.log('Shipping Info:', shippingInfo);
 
-  const calculateShipping = () => {
-    // Example shipping calculation logic
-    return items.length > 0 ? 0 : 0;
+  const calculateShippingCost = () => {
+    const cartTotal = calculateSubtotal();
+    // If cart total is 499 or more, free shipping
+    if (cartTotal >= 499) {
+      return 0;
+    }
+
+    // If within Bangalore, lower shipping cost
+    if (shippingInfo?.withInBangalore) {
+      return 30;
+    }
+
+    // Default outstation shipping cost
+    return 50;
   };
 
-  const calculateTotal = () => {
-    return calculateSubtotal() + calculateShipping();
-  };
+  const shippingCost = calculateShippingCost();
+  const totalAmount = calculateSubtotal() + shippingCost;
 
   // Pass total to parent whenever it changes
   useEffect(() => {
-    const total = calculateTotal();
-    onTotalCalculated(total);
-  }, [items, onTotalCalculated]);
+    onTotalCalculated(totalAmount);
+  }, [items, onTotalCalculated, shippingInfo]);
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
@@ -62,12 +71,22 @@ export default function OrderSummary({ items, shippingInfo, onTotalCalculated })
           <p className="font-semibold">₹{calculateSubtotal().toFixed(2)}</p>
         </div>
         <div className="flex justify-between mb-4">
-          <p className="text-gray-600">Shipping</p>
-          <p className="font-semibold">₹{calculateShipping().toFixed(2)}</p>
+          <p className="text-gray-600">
+            Shipping 
+            {shippingCost === 0 && <span className="text-green-600 ml-2">(Free)</span>}
+            {shippingInfo?.withInBangalore && shippingCost > 0 && 
+              <span className="text-sm text-gray-600 ml-2">(Local Delivery)</span>}
+          </p>
+          <p className="font-semibold">₹{shippingCost.toFixed(2)}</p>
         </div>
         <div className="flex justify-between border-t pt-4">
-          <p className="text-lg font-bold">Total</p>
-          <p className="text-lg font-bold">₹{calculateTotal().toFixed(2)}</p>
+          <div className="flex flex-col">
+            <p className="text-lg font-bold">Total</p>
+            <p className="text-xs text-gray-600 font-normal">
+              Inclusive of all taxes and shipping
+            </p>
+          </div>
+          <p className="text-lg font-bold">₹{totalAmount.toFixed(2)}</p>
         </div>
       </div>
 

@@ -12,6 +12,7 @@ export default function ShippingForm({
   const sampleInitialData = {
     "email": "ajejey@gmail.com",
     "fullName": "Ajey N",
+    "userDetailsLoading": false,
     "userDetails": {
         "_id": "6756fdc659075e388326c016",
         "appwriteId": "6756fdc4000f92846244",
@@ -123,6 +124,9 @@ export default function ShippingForm({
             ${errors.phone ? 'border-red-500 text-red-900' : ''}`}
           placeholder="Enter phone number (e.g., 9876543210)"
         />
+        {initialData?.userDetailsLoading && (
+          <p className="mt-1 text-sm text-gray-600">Loading...</p>
+        )}
         {errors.phone && (
           <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
         )}
@@ -143,6 +147,9 @@ export default function ShippingForm({
             ${errors.address ? 'border-red-500 text-red-900' : ''}`}
           placeholder="Street Address"
         />
+        {initialData?.userDetailsLoading && (
+          <p className="mt-1 text-sm text-gray-600">Loading...</p>
+        )}
         {errors.address && (
           <p className="mt-1 text-sm text-red-600">{errors.address}</p>
         )}
@@ -164,6 +171,9 @@ export default function ShippingForm({
             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 py-2 px-3 
               ${errors.city ? 'border-red-500 text-red-900' : ''}`}
           />
+          {initialData?.userDetailsLoading && (
+            <p className="mt-1 text-sm text-gray-600">Loading...</p>
+          )}
           {errors.city && (
             <p className="mt-1 text-sm text-red-600">{errors.city}</p>
           )}
@@ -183,6 +193,9 @@ export default function ShippingForm({
             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 py-2 px-3 
               ${errors.state ? 'border-red-500 text-red-900' : ''}`}
           />
+          {initialData?.userDetailsLoading && (
+            <p className="mt-1 text-sm text-gray-600">Loading...</p>
+          )}
           {errors.state && (
             <p className="mt-1 text-sm text-red-600">{errors.state}</p>
           )}
@@ -203,32 +216,42 @@ export default function ShippingForm({
               ${errors.pincode ? 'border-red-500 text-red-900' : ''}`}
             placeholder="12345"
           />
+          {initialData?.userDetailsLoading && (
+            <p className="mt-1 text-sm text-gray-600">Loading...</p>
+          )}
           {errors.pincode && (
             <p className="mt-1 text-sm text-red-600">{errors.pincode}</p>
+          )}
+          {initialData?.pincodeValidation?.message && !initialData?.pincodeValidation?.isValid && (
+            <div className="mt-2 p-3 bg-yellow-50 rounded-md">
+              <p className="text-sm text-yellow-800">
+                <span className="font-medium">Warning:</span> {initialData.pincodeValidation.message}.<br/>
+                If you&apos;re having trouble, please <a href="/contact" className="underline hover:text-yellow-900">contact us</a> for assistance.
+              </p>
+            </div>
           )}
         </div>
 
         {/* Country Input - Second row */}
-        {/* <div className="lg:col-span-2">
+        <div className="lg:col-span-2">
           <label htmlFor="country" className="block text-sm font-medium text-gray-700">
             Country
           </label>
           <select
             id="country"
             name="country"
-            value={formData.country}
+            readOnly
+            value={formData.country || 'India'}
             onChange={handleChange}
             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 py-2 px-3 
               ${errors.country ? 'border-red-500 text-red-900' : ''}`}
           >
             <option value="India">India</option>
-            <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
           </select>
           {errors.country && (
             <p className="mt-1 text-sm text-red-600">{errors.country}</p>
           )}
-        </div> */}
+        </div>
       </div>
 
       {/* Submit Button */}

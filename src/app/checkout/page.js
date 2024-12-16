@@ -8,6 +8,8 @@ import { syncUserCart } from './actions';
 import { ShippingForm, OrderSummary, AuthModal } from './components';
 import { account } from '@/appwrite/clientConfig';
 import { getUserByAppwriteId } from '../actions';
+import AuthEmailOtpModal from './components/AuthEmailOtpModal';
+import CheckoutLoading from './loading';
 
 export default function CheckoutPage() {
   const [user, setUser] = useState(null);
@@ -15,6 +17,7 @@ export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState([]);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [shippingFormErrors, setShippingFormErrors] = useState({});
+  const [userDetailsLoading, setUserDetailsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,6 +28,7 @@ export default function CheckoutPage() {
 
         const userDetails = await getUserByAppwriteId(currentUser.$id);
         setUserDetails(userDetails);
+        setUserDetailsLoading(false);
 
         // Fetch cart items from local storage or state management
         const storedCartItems = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -148,7 +152,7 @@ export default function CheckoutPage() {
 
   if (showAuthModal) {
     return (
-      <AuthModal 
+      <AuthEmailOtpModal  
         onAuthSuccess={handleAuthSuccess}
         initialEmail=""
         initialFullName=""
@@ -157,7 +161,7 @@ export default function CheckoutPage() {
   }
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <CheckoutLoading />;
   }
 
   console.log("cartItems", cartItems);
@@ -172,7 +176,8 @@ export default function CheckoutPage() {
             initialData={{
               email: user.email,
               fullName: user.name,
-              userDetails: userDetails
+              userDetails: userDetails,
+              userDetailsLoading: userDetailsLoading
             }} 
             errors={shippingFormErrors}
           />

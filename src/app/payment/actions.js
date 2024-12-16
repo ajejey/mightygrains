@@ -26,6 +26,7 @@ export async function getUserShippingInfo(appwriteId) {
       pincode: user.defaultShippingAddress.pincode || '',
       phone: user.defaultShippingAddress.phone || '',
       country: user.defaultShippingAddress.country || 'India',
+      withInBangalore: user.defaultShippingAddress.withInBangalore || false,
       email: user.email
     } : null;
   } catch (error) {
@@ -123,8 +124,19 @@ export async function createOrder(orderData) {
       price: cartItem.product.price.amount
     }));
 
+
     // Calculate total amount from items
-    const total = transformedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const productsTotal = transformedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    let total = productsTotal;
+    // Calculate shipping cost
+    if(productsTotal <= 499){
+      if(user.defaultShippingAddress.withInBangalore){
+        total += 30;
+      } else {
+        total += 50;
+      }
+    }
+
 
     // Find and update the existing order
     const updatedOrder = await Order.findOneAndUpdate(
@@ -136,7 +148,7 @@ export async function createOrder(orderData) {
         $set: {
           items: transformedItems,
           total: total,
-          status: 'processing',
+          status: 'paid',
           razorpayPaymentId: orderData.paymentDetails.razorpay_payment_id,
           shippingAddress: {
             fullName: orderData.shippingInfo.fullName,

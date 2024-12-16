@@ -58,7 +58,7 @@ export function CartProvider({ children }) {
                         setCart({
                             items: dbCartItems.map(item => ({
                                 product: {
-                                    productId: item.product.id,
+                                    id: item.product.id,
                                     price: {
                                         amount: item.price
                                     }
@@ -105,64 +105,106 @@ export function CartProvider({ children }) {
         return () => clearTimeout(timeoutId);
     }, [cart.items, loading]);
 
+    const MAX_QUANTITY_PER_PRODUCT = 5;
+
     const addToCart = (product, quantity = 1) => {
-        console.log('Adding to cart:', product);
+      // Find if product already exists in cart
+      const existingItemIndex = cart.items.findIndex(item => item.product.id === product.id);
+      
+      // Calculate total quantity including existing and new quantity
+      const totalQuantity = existingItemIndex !== -1 
+        ? cart.items[existingItemIndex].quantity + quantity 
+        : quantity;
+
+      // Check if total quantity exceeds max limit
+      if (totalQuantity > MAX_QUANTITY_PER_PRODUCT) {
+        // If it would exceed, set to max
+        const adjustedQuantity = Math.min(totalQuantity, MAX_QUANTITY_PER_PRODUCT);
+        
         setCart(prev => {
-            // Check if product already exists in cart
-            const existingItemIndex = prev.items.findIndex(
-                item => item.product.id === product.id
-            );
-
-            if (existingItemIndex > -1) {
-                // Update quantity of existing item
-                const updatedItems = [...prev.items];
-                updatedItems[existingItemIndex] = {
-                    ...updatedItems[existingItemIndex],
-                    quantity: updatedItems[existingItemIndex].quantity + quantity
-                };
-
-                return { 
-                    ...prev, 
-                    items: updatedItems 
-                };
-            }
-
-            // Add new item to cart
-            return { 
-                ...prev, 
-                items: [...prev.items, { product, quantity }] 
+          // If product exists, update its quantity
+          if (existingItemIndex > -1) {
+            const updatedItems = [...prev.items];
+            updatedItems[existingItemIndex] = {
+              ...updatedItems[existingItemIndex],
+              quantity: adjustedQuantity
             };
+
+            return { 
+              ...prev, 
+              items: updatedItems 
+            };
+          }
+
+          // If product doesn't exist, add with max quantity
+          return { 
+            ...prev, 
+            items: [...prev.items, { product, quantity: adjustedQuantity }] 
+          };
         });
+
+        // Show a console log about max quantity
+        console.log(`Maximum quantity of ${MAX_QUANTITY_PER_PRODUCT} reached for this product`);
+        return;
+      }
+
+      // Normal add to cart logic if within limits
+      setCart(prev => {
+        // If product already exists, update its quantity
+        if (existingItemIndex > -1) {
+          const updatedItems = [...prev.items];
+          updatedItems[existingItemIndex] = {
+            ...updatedItems[existingItemIndex],
+            quantity: updatedItems[existingItemIndex].quantity + quantity
+          };
+
+          return { 
+            ...prev, 
+            items: updatedItems 
+          };
+        }
+
+        // Add new item to cart
+        return { 
+          ...prev, 
+          items: [...prev.items, { product, quantity }] 
+        };
+      });
     };
 
     const updateQuantity = (productId, newQuantity) => {
-        // Ensure quantity is at least 1
-        const safeQuantity = Math.max(1, newQuantity);
+      // Ensure new quantity is within max limit
+      const safeQuantity = Math.min(Math.max(1, newQuantity), MAX_QUANTITY_PER_PRODUCT);
 
-        setCart(prev => {
-            // Find the index of the item to update
-            const updatedItems = prev.items.map(item => 
-                item.product.id === productId 
-                    ? { ...item, quantity: safeQuantity } 
-                    : item
-            );
+      setCart(prev => {
+        // Find the index of the item to update
+        const updatedItems = prev.items.map(item => 
+          item.product.id === productId 
+            ? { ...item, quantity: safeQuantity } 
+            : item
+        );
 
-            return { 
-                ...prev, 
-                items: updatedItems 
-            };
-        });
+        return { 
+          ...prev, 
+          items: updatedItems 
+        };
+      });
+
+      // Log if max quantity was attempted
+      if (newQuantity > MAX_QUANTITY_PER_PRODUCT) {
+        console.log(`Maximum quantity of ${MAX_QUANTITY_PER_PRODUCT} reached for this product`);
+      }
     };
 
     const removeFromCart = (productId) => {
-        setCart(prev => ({
-            ...prev,
-            items: prev.items.filter(item => item.product.id !== productId)
-        }));
+      setCart(prev => ({
+        ...prev,
+        items: prev.items.filter(item => item.product.id !== productId)
+      }));
     };
 
     const clearCart = () => {
-        setCart({ items: [], total: 0 });
+      setCart({ items: [], total: 0 });
     };
 
     return (
