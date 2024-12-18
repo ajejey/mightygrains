@@ -51,6 +51,7 @@ export default function PaymentPage() {
       setLoading(true);
       setProcessingStatus('Initiating payment...');
 
+      
       // Create Razorpay order
       const session = await account.get();
       const orderResponse = await createRazorpayOrder({
@@ -64,7 +65,7 @@ export default function PaymentPage() {
 
       // Initialize Razorpay
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID,
         amount: orderResponse.amount,
         currency: "INR",
         name: "Mighty Grains",

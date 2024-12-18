@@ -5,7 +5,7 @@ import Order from "@/models/order";
 import Cart from "@/models/cart";
 
 const generateSignature = (razorpayOrderId, razorpayPaymentId) => {
-    const keySecret = process.env.RAZORPAY_TEST_KEY_SECRET;
+    const keySecret = process.env.RAZORPAY_LIVE_KEY_SECRET;
     return crypto
         .createHmac("sha256", keySecret)
         .update(razorpayOrderId + "|" + razorpayPaymentId)

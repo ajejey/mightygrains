@@ -50,7 +50,7 @@ const OrderPage = ({ params }) => {
       if (!data.id) throw new Error('Failed to create order');
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID,
         amount: data.amount,
         currency: data.currency,
         name: "Mighty Grains",

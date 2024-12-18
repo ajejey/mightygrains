@@ -39,13 +39,13 @@ export default function OrdersPage() {
 
   if (orders.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <FaShoppingBag className="w-24 h-24 text-green-800 mx-auto mb-8" />
-        <h1 className="text-3xl font-bold text-green-800 mb-4">No Orders Yet</h1>
-        <p className="text-amber-700 mb-8">Start exploring our products and place your first order!</p>
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:py-16 text-center">
+        <FaShoppingBag className="w-16 h-16 sm:w-24 sm:h-24 text-green-800 mx-auto mb-6 sm:mb-8 opacity-90" />
+        <h1 className="text-2xl sm:text-3xl font-bold text-green-800 mb-3 sm:mb-4">No Orders Yet</h1>
+        <p className="text-amber-700 mb-6 sm:mb-8 text-sm sm:text-base">Start exploring our products and place your first order!</p>
         <Link 
           href="/products" 
-          className="inline-block bg-amber-500 text-white px-8 py-3 rounded-lg hover:bg-amber-600 transition-colors"
+          className="inline-block bg-amber-500 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg hover:bg-amber-600 transition-colors text-sm sm:text-base shadow-sm hover:shadow-md"
         >
           Browse Products
         </Link>
@@ -54,37 +54,52 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-green-800 mb-8">Your Orders</h1>
+    <div className="max-w-7xl mx-auto px-4 py-4 sm:py-4">
+      <h1 className="text-2xl sm:text-3xl font-bold text-green-800 mb-6 sm:mb-8">Your Orders</h1>
 
-      <div className="space-y-4">
-      {orders.map((order) => (
-          <div key={order._id} className="bg-white rounded-lg shadow-md p-4 flex justify-between items-center">
-            <div>
-              <p className="font-medium text-green-800">Order #{order._id.slice(-8)}</p>
-              <p className="text-gray-600">
-                Placed on {new Date(order.createdAt).toLocaleDateString()}
-              </p>
-              <p className="text-amber-600">
-                Total: ₹{order.total.toFixed(2)}
-              </p>
-              <span 
-                className={`inline-block px-3 py-1 rounded-full text-sm font-medium 
-                  ${order.status === 'paid' ? 'bg-green-100 text-green-800' : 
-                  order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 
-                  'bg-gray-100 text-gray-800'}`}
+      <div className="grid gap-4">
+        {orders.map((order) => (
+          <div 
+            key={order._id} 
+            className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <p className="font-medium text-green-800 text-lg">
+                    Order #{order._id.slice(-8)}
+                  </p>
+                  <span 
+                    className={`inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-medium w-fit
+                      ${order.status === 'paid' ? 'bg-green-100 text-green-800' : 
+                      order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 
+                      'bg-gray-100 text-gray-800'}`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 text-sm text-gray-600">
+                  <p>
+                    Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                  <p className="text-amber-600 font-medium">
+                    Total: ₹{order.total.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+              <Link 
+                href={`/orders/${order._id}`} 
+                className="flex items-center justify-center px-4 py-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors text-sm sm:text-base gap-2 border border-green-200"
               >
-                {order.status}
-              </span>
+                <FaEye /> View Details
+              </Link>
             </div>
-            <Link 
-              href={`/orders/${order._id}`} 
-              className="text-green-600 hover:text-green-800 flex items-center"
-            >
-              <FaEye className="mr-2" /> View Details
-            </Link>
           </div>
-      ))}
+        ))}
       </div>
     </div>
   );

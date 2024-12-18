@@ -86,6 +86,8 @@ const CartPage = () => {
     }
   };
 
+  console.log("cart in cart page ", cart);
+
   if (cart.items.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">

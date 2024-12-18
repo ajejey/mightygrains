@@ -56,7 +56,7 @@ export default function OrdersLayout({ children }) {
   }
 
   return isAuthenticated ? (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       {children}
     </div>
   ) : null;
