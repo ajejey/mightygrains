@@ -65,7 +65,7 @@ export default function PaymentPage() {
 
       // Initialize Razorpay
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY_ID,
         amount: orderResponse.amount,
         currency: "INR",
         name: "Mighty Grains",

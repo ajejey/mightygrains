@@ -119,14 +119,14 @@ const CartPage = () => {
     </div>
     
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-4 md:gap-8">
         {/* Cart Items */}
         <div className="md:col-span-2 space-y-4">
           {cart.items.map((item) => (
-            <div key={item.product.id} className="bg-white rounded-lg shadow-md p-4">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div key={item.product.id} className="bg-white rounded-lg shadow-md p-3 md:p-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4">
                 {/* Product Image */}
-                <div className="w-24 h-24 relative flex-shrink-0">
+                <div className="w-20 h-20 md:w-24 md:h-24 relative flex-shrink-0">
                   <Image
                     src={item.product.images[0]}
                     alt={item.product.name}
@@ -136,38 +136,38 @@ const CartPage = () => {
                 </div>
                 
                 {/* Product Details */}
-                <div className="flex-grow">
-                  <h3 className="font-medium text-green-800">{item.product.name}</h3>
-                  <p className="text-amber-600">₹{item.product.price.amount} per {item.product.price.unit}</p>
+                <div className="flex-grow min-w-0">
+                  <h3 className="font-medium text-green-800 text-sm md:text-base truncate">{item.product.name}</h3>
+                  <p className="text-amber-600 text-sm">₹{item.product.price.amount} per {item.product.price.unit}</p>
                 </div>
 
                 {/* Quantity Controls and Price */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
+                <div className="flex items-center justify-between w-full sm:w-auto gap-2 mt-2 sm:mt-0">
                   {/* Quantity Controls */}
                   <div className="flex items-center border rounded">
                     <button
                       onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
-                      className="px-3 py-1 text-gray-600 hover:text-gray-800"
+                      className="px-2 md:px-3 py-1 text-gray-600 hover:text-gray-800"
                     >
                       -
                     </button>
-                    <span className="px-3 py-1 border-x">{item.quantity}</span>
+                    <span className="px-2 md:px-3 py-1 border-x text-sm md:text-base">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                      className="px-3 py-1 text-gray-600 hover:text-gray-800"
+                      className="px-2 md:px-3 py-1 text-gray-600 hover:text-gray-800"
                     >
                       +
                     </button>
                   </div>
 
                   {/* Price and Remove Button */}
-                  <div className="flex items-center justify-between sm:flex-col sm:items-end gap-2 w-full sm:w-auto">
-                    <div className="font-medium text-green-800">₹{item.product.price.amount * item.quantity}</div>
+                  <div className="flex items-center gap-3">
+                    <div className="font-medium text-green-800 text-sm md:text-base">₹{item.product.price.amount * item.quantity}</div>
                     <button
                       onClick={() => removeFromCart(item.product.id)}
-                      className="text-red-500 hover:text-red-600"
+                      className="text-red-500 hover:text-red-600 p-1"
                     >
-                      <FaTrash />
+                      <FaTrash className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ const CartPage = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-white rounded-lg shadow-md p-6 h-fit">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6 h-fit">
           <h2 className="text-xl font-bold text-green-800 mb-4">Order Summary</h2>
           <div className="space-y-3 mb-6">
             <div className="flex justify-between text-amber-700">
@@ -187,13 +187,13 @@ const CartPage = () => {
             {shouldShowPincodeInput && (
               <div className="mb-4 p-4 bg-gray-100 rounded-lg">
                 <p className="text-md font-semibold mb-2">Pincode for Delivery Fee</p>
-                <form onSubmit={handlePincodeSubmit} className="flex items-center space-x-2">
+                <form onSubmit={handlePincodeSubmit} className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                   <input 
                     type="text" 
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
                     placeholder="Enter Pincode" 
-                    className={`border rounded-md px-3 py-2 ${
+                    className={`border rounded-md px-3 py-2 w-full sm:w-auto ${
                       pincodeError ? 'border-red-500' : 'border-gray-300'
                     }`}
                     maxLength="6"
