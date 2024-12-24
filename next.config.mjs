@@ -19,15 +19,13 @@ const nextConfig = {
         ],
         remotePatterns: [
             {
-                protocol: 'http',
-                hostname: 'localhost'
-            },
-            {
                 protocol: 'https',
-                hostname: 'localhost'
+                hostname: '**',
+                port: '',
+                pathname: '/**',
             }
-        ]
-    },
+        ],
+    }
 };
 
 export default nextConfig;
