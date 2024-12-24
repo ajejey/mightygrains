@@ -5,6 +5,7 @@ import CtaSection from './components/ctaSection';
 import FooterSection from './components/footerSection';
 import { Providers } from './providers';
 import HeaderSection from './components/headerSection';
+import FacebookPixel from '@/components/FacebookPixel';
 
 const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -110,9 +111,10 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <GoogleAnalytics gaId="G-DJF4L757YF" />
-      <body className={poppins.className}>
+    <html lang="en" className={poppins.className}>
+      <body>
+        <FacebookPixel />
+        <GoogleAnalytics gaId="G-DJF4L757YF" />
         <Providers>
           <HeaderSection />
           <main className="pt-20">
