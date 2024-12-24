@@ -1,8 +1,12 @@
 import React from 'react'
+import SupportBanner from '@/components/SupportBanner';
 
 const layout = ({ children }) => {
   return (
-    <div>{children}</div>
+    <div>
+      {children}
+      <SupportBanner />
+    </div>
   )
 }
 

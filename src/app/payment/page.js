@@ -14,6 +14,7 @@ import {
   sendOrderConfirmationEmailViaService 
 } from './actions';
 import Script from 'next/script';
+import SupportBanner from '@/components/SupportBanner';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -242,6 +243,7 @@ export default function PaymentPage() {
             <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-200"></div>
           </div>
         </div>
+        <SupportBanner />
       </div>
     );
   }

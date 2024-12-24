@@ -49,9 +49,9 @@ const FooterSection = () => {
               <Link href="https://www.instagram.com/mighty.grains/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300 transition-colors">
                 <FaInstagram size={20} />
               </Link>
-              <Link href="https://wa.me/917829288011" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300 transition-colors">
+              {/* <Link href="https://wa.me/917829288011" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300 transition-colors">
                 <FaWhatsapp size={20} />
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
