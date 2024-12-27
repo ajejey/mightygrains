@@ -10,6 +10,7 @@ import ragiHurihittu from '../assets/images/ragi-hurihittu.png';
 import sattuMaavuGrains from '../assets/images/sattu-maavu-grains.png';
 import sproutedRagiSeri from '../assets/images/sprouted-ragi-seri.png';
 import sproutedRagiSeriAlmonds from '../assets/images/sprouted-ragi-seri-almonds.png';
+import { FcGoogle } from 'react-icons/fc';
 
 const FeatureBadge = ({ icon: Icon, text }) => (
   <div className="flex items-center bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm">
@@ -74,7 +75,15 @@ const HeroSection = () => {
             <h1 className="text-3xl font-bold mb-4 leading-tight">
               Nourish Your Baby with <span className="text-amber-600">Sprouted Ragi</span>
             </h1>
-
+            <div className="flex  items-center mb-4">
+                <FcGoogle className='text-2xl mr-2' />
+                  <div className="flex text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="w-5 h-5" />
+                    ))}
+                  </div>
+                  <div className="ml-2 text-green-700">5.0 on Google Reviews</div>
+                </div>
             <div className="w-full max-w-md mb-6">
               <Slider {...settings}>
                 {heroImages.map((image, index) => (
@@ -130,6 +139,15 @@ const HeroSection = () => {
               <h1 className="text-5xl font-bold mb-4 leading-tight">
                 Nourish Your Baby with <span className="text-amber-600">Sprouted Ragi</span>
               </h1>
+              <div className="flex  items-center my-4">
+                <FcGoogle className='text-2xl mr-2' />
+                  <div className="flex text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="w-5 h-5" />
+                    ))}
+                  </div>
+                  <div className="ml-2 text-green-700">5.0 on Google Reviews</div>
+                </div>
               <p className="text-xl mb-6">
                 Discover traditional South Indian baby food, crafted with love and Ragi.
               </p>
