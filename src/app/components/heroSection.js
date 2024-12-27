@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaLeaf, FaAward, FaStar } from 'react-icons/fa';
+import { FaLeaf, FaAward, FaStar, FaTruck } from 'react-icons/fa';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -59,9 +59,8 @@ const HeroSection = () => {
     ),
     customPaging: i => (
       <button
-        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-          i === currentSlide ? 'bg-amber-600 w-4' : 'bg-amber-300'
-        }`}
+        className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-amber-600 w-4' : 'bg-amber-300'
+          }`}
       />
     ),
   };
@@ -75,7 +74,7 @@ const HeroSection = () => {
             <h1 className="text-3xl font-bold mb-4 leading-tight">
               Nourish Your Baby with <span className="text-amber-600">Sprouted Ragi</span>
             </h1>
-            
+
             <div className="w-full max-w-md mb-6">
               <Slider {...settings}>
                 {heroImages.map((image, index) => (
@@ -103,18 +102,26 @@ const HeroSection = () => {
               <FeatureBadge icon={FaAward} text="Fresh & Homemade" />
               <FeatureBadge icon={FaStar} text="Sugar & Salt free" />
             </div>
-            <Link 
-              href="/products" 
+            <Link
+              href="/products"
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center mb-4 transition duration-300 ease-in-out"
             >
               Explore Our Products
             </Link>
-            <Link 
-              href="#contact" 
+            <Link
+              href="#contact"
               className="w-full bg-white hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out"
             >
               Contact Us
             </Link>
+            <div className="relative w-full bg-gradient-to-r from-green-100 to-green-200 border-l-4 border-green-600 shadow-md rounded-lg mt-4 px-1 overflow-hidden">
+                <div className="flex items-center justify-center space-x-3 py-2">
+                  <FaTruck className="text-green-700 w-6 h-4" strokeWidth={2} />
+                  <p className="text-green-900 font-medium text-sm tracking-tight">
+                    Free Shipping across India on Orders Over <span className="font-bold">₹499</span>
+                  </p>
+                </div>
+              </div>
           </div>
         ) : (
           // Desktop View
@@ -132,21 +139,29 @@ const HeroSection = () => {
                 <FeatureBadge icon={FaStar} text="Free from added Sugar & Salt" />
               </div>
               <div className="flex gap-4">
-                <Link 
-                  href="/products" 
+                <Link
+                  href="/products"
                   className="bg-green-600 w-1/2 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-center transition duration-300 ease-in-out transform hover:scale-105"
                 >
                   Explore Products
                 </Link>
-                <Link 
-                  href="#contact" 
+                <Link
+                  href="#contact"
                   className="bg-white w-1/2 hover:bg-amber-100 text-amber-800 font-semibold py-3 px-6 border border-amber-600 rounded-full text-center transition duration-300 ease-in-out"
                 >
                   Contact Us
                 </Link>
               </div>
+              <div className="relative bg-gradient-to-r from-green-100 to-green-200 border-l-4 border-green-600 shadow-md rounded-lg mt-4 px-1 overflow-hidden">
+                <div className="flex items-center justify-center space-x-3 py-2">
+                  <FaTruck className="text-green-700 w-6 h-4" strokeWidth={2} />
+                  <p className="text-green-900 font-medium text-sm tracking-tight">
+                    Free Shipping across India on Orders Over <span className="font-bold">₹499</span>
+                  </p>
+                </div>
+              </div>
             </div>
-            
+
             <div className="w-1/2">
               <div className="max-w-2xl mx-auto">
                 <Slider {...settings}>
