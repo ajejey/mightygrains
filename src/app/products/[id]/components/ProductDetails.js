@@ -119,7 +119,7 @@ const ProductDetails = ({ product }) => {
 //   const relatedProducts = products.filter(p => p.id.toString() !== params.id);
 
   return (
-    <div className="bg-amber-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-amber-50 min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm">

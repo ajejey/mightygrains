@@ -18,7 +18,7 @@ const ReturnPolicyPage = () => {
 
         <h2 className="text-2xl font-semibold text-green-700 mt-6 mb-3">1. Order Cancellations</h2>
         <ul className="list-disc pl-6 mb-4 text-amber-800">
-          <li><strong>Customer-Initiated Cancellations:</strong> If you wish to cancel an order, please contact us at hello@mightygrains.com or +91 98765 43210 as soon as possible. Orders can only be canceled before they have been shipped. Once an order is dispatched, it cannot be canceled.</li>
+          <li><strong>Customer-Initiated Cancellations:</strong> If you wish to cancel an order, please contact us at mightygrains656@gmail.com as soon as possible. Orders can only be canceled before they have been shipped. Once an order is dispatched, it cannot be canceled.</li>
           <li><strong>Cancellation Due to Non-Availability:</strong> In the rare event that a product is unavailable or out of stock after your order has been placed, we will notify you promptly and provide a full refund.</li>
           <li><strong>Suspected Fraudulent Orders:</strong> We reserve the right to cancel any order if we suspect fraudulent activity. In such cases, you will be notified, and a refund will be issued as per our refund timeline.</li>
         </ul>
@@ -28,7 +28,7 @@ const ReturnPolicyPage = () => {
           Due to the perishable nature of our products, we only accept returns if the product is defective, damaged, or if the wrong item was delivered. Please check your order upon delivery and notify us immediately if there is an issue. To request a return:
         </p>
         <ul className="list-disc pl-6 mb-4 text-amber-800">
-          <li><strong>Contact Us:</strong> Email us at hello@mightygrains.com within 3 days of receiving the product, along with your order number, a photo of the product, and a description of the issue.</li>
+          <li><strong>Contact Us:</strong> Email us at mightygrains656@gmail.com within 3 days of receiving the product, along with your order number, a photo of the product, and a description of the issue.</li>
           <li><strong>Return Approval:</strong> Upon reviewing your request, we will confirm whether the return is eligible and provide instructions on how to proceed.</li>
         </ul>
 

@@ -9,6 +9,7 @@ import { useCart } from '@/context/CartContext';
 // Import CSS for react-slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import './ProductCard.css';
 
 const truncateText = (text, maxLength = 100) => {
   if (text.length <= maxLength) return text;
@@ -61,8 +62,8 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden relative group">
-      <Link href={`/products/${product.id}`}>
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden relative group h-full flex flex-col">
+      <Link href={`/products/${product.id}`} className="flex-shrink-0">
         <div className="relative">
           <Slider 
             dots={true}
@@ -70,6 +71,8 @@ const ProductCard = ({ product }) => {
             speed={500}
             slidesToShow={1}
             slidesToScroll={1}
+            className="product-slider"
+            dotsClass="slick-dots custom-dots"
           >
             {product.images.map((image, index) => (
               <div key={index} className="relative w-full aspect-square">
@@ -78,7 +81,7 @@ const ProductCard = ({ product }) => {
                   alt={`${product.name} - Image ${index + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="p-2 transition-all duration-300 object-cover"
+                  className="md:p-2 transition-all duration-300 object-contain"
                   priority={index === 0}
                 />
               </div>
@@ -87,45 +90,48 @@ const ProductCard = ({ product }) => {
         </div>
       </Link>
 
-      <div className="mt-4 p-4">
-        <Link href={`/products/${product.id}`}>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">{product.name}</h3>
-          <p className="text-amber-700 mb-4 line-clamp-3">
-            {truncateText(product.fullDescription || '', 80)}
+      <div className="flex-grow flex flex-col p-2 sm:p-4">
+        <Link href={`/products/${product.id}`} className="flex-grow">
+          <h3 className="text-sm sm:text-lg font-semibold text-amber-800 mb-1 sm:mb-2 line-clamp-2">{product.name}</h3>
+          <p className="text-gray-600 text-xs sm:text-base mb-2 sm:mb-4 line-clamp-2">
+            {truncateText(product.fullDescription || '', 40)}
           </p>
         </Link>
         
-          <span className="text-green-600 font-bold text-xl mb-4">
-            ₹{product.price.amount.toFixed(2)}
+        <div className="mt-auto">
+          <span className="text-green-600 font-bold text-base sm:text-xl block mb-2">
+            ₹{product.price.amount.toFixed(2)} 
+            <span className="text-gray-400 text-xs sm:text-sm font-normal"> / {product.price.unit}</span> 
           </span>
-        <div className="flex items-center justify-between mt-4">
           
-          {quantity === 0 ? (
-            <button 
-              onClick={handleAddToCart}
-              className="w-full bg-green-600 text-white py-2 rounded-lg flex items-center justify-center hover:bg-green-700 transition-colors"
-            >
-              <FaShoppingCart className="mr-2" /> Add to Cart
-            </button>
-          ) : (
-            <div className="flex items-center w-full bg-green-50 rounded-lg overflow-hidden">
+          <div className="flex items-center justify-between">
+            {quantity === 0 ? (
               <button 
-                onClick={handleDecreaseQuantity}
-                className="p-4 bg-green-300 hover:bg-green-400 transition-colors"
+                onClick={handleAddToCart}
+                className="w-full bg-green-600 text-white py-1.5 sm:py-2 rounded-lg flex items-center justify-center hover:bg-green-700 transition-colors text-sm sm:text-base"
               >
-                <FaMinus className="text-green-700"  />
+                <FaShoppingCart className="mr-1 sm:mr-2 text-xs sm:text-base" /> Add to Cart
               </button>
-              <span className="flex-grow text-center text-green-800 font-semibold">
-                {quantity}
-              </span>
-              <button 
-                onClick={handleIncreaseQuantity}
-                className="p-4 bg-green-300 hover:bg-green-400 transition-colors"
-              >
-                <FaPlus className="text-green-600" />
-              </button>
-            </div>
-          )}
+            ) : (
+              <div className="flex items-center w-full bg-green-50 rounded-lg overflow-hidden">
+                <button 
+                  onClick={handleDecreaseQuantity}
+                  className="p-2 sm:p-4 bg-green-300 hover:bg-green-400 transition-colors"
+                >
+                  <FaMinus className="text-green-700 text-xs sm:text-base" />
+                </button>
+                <span className="flex-grow text-center text-green-800 font-semibold text-sm sm:text-base">
+                  {quantity}
+                </span>
+                <button 
+                  onClick={handleIncreaseQuantity}
+                  className="p-2 sm:p-4 bg-green-300 hover:bg-green-400 transition-colors"
+                >
+                  <FaPlus className="text-green-600 text-xs sm:text-base" />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

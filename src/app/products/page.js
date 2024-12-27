@@ -11,7 +11,7 @@ import ProductCard from '../components/reusableComponents/ProductCard';
 
 const ProductsPage = () => {
   return (
-    <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen px-2 sm:px-2 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumbs */}
         <nav className="flex items-center text-sm font-medium text-amber-600 mb-6" aria-label="Breadcrumb">
@@ -33,33 +33,34 @@ const ProductsPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="px-4 sm:px-6"
         >
-          <h1 className="text-5xl font-bold text-green-800 mb-8 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-800 mb-4 sm:mb-8 text-center">
             Nourish Your Little One
           </h1>
-          <p className="text-xl text-amber-800 mb-12 text-center max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-amber-800 mb-8 sm:mb-12 text-center max-w-3xl mx-auto">
             Discover our range of nutritious, traditional South Indian baby food products. 
             Crafted with love and care for your baby&apos;s healthy growth.
           </p>
         </motion.div>
 
-        <div className="flex justify-center space-x-8 mb-12">
+        <div className="flex justify-center space-x-4 sm:space-x-8 mb-8 sm:mb-12 px-2">
           <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaLeaf className="text-4xl text-green-600 mb-2" />
-            <span className="text-amber-800 font-semibold">100% Natural</span>
+            <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">100% Natural</span>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaBaby className="text-4xl text-green-600 mb-2" />
-            <span className="text-amber-800 font-semibold">Baby-Friendly</span>
+            <FaBaby className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">Baby-Friendly</span>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaHeart className="text-4xl text-green-600 mb-2" />
-            <span className="text-amber-800 font-semibold">Made with Love</span>
+            <FaHeart className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">Made with Love</span>
           </motion.div>
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2 px-2 sm:px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}

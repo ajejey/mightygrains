@@ -50,6 +50,7 @@ const HeroSection = () => {
     fade: true,
     arrows: false,
     cssEase: "linear",
+    dotsClass: "slick-dots custom-dots",
     beforeChange: (_, next) => setCurrentSlide(next),
     appendDots: dots => (
       <div className="absolute bottom-4 w-full">

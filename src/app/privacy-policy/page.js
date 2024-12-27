@@ -58,7 +58,7 @@ const PrivacyPolicyPage = () => {
 
           <h2 className="text-2xl font-semibold text-green-700 mt-6 mb-3">7. Your Rights</h2>
           <p className="mb-4 text-amber-800">
-            Depending on your location, you may have certain rights regarding your personal information, such as the right to access, correct, or delete your data. Contact us at hello@mightygrains.com for any such requests.
+            Depending on your location, you may have certain rights regarding your personal information, such as the right to access, correct, or delete your data. Contact us at mightygrains656@gmail.com for any such requests.
           </p>
 
           <h2 className="text-2xl font-semibold text-green-700 mt-6 mb-3">8. Updates to This Policy</h2>
@@ -71,8 +71,8 @@ const PrivacyPolicyPage = () => {
             If you have any questions or concerns about this Privacy Policy or your data, please contact us at:
           </p>
           <p className="mb-4 text-amber-800">
-            Email: hello@mightygrains.com<br />
-            Address: 123 Grain Street, Healthy Baby Plaza, Bangalore, Karnataka 560001, India
+            Email: mightygrains656@gmail.com<br />
+            Address: Jayanna Layout, Rajarajeshwari Nagar, Bangalore, Karnataka 560001, India
           </p>
 
           <p className="mt-8 text-sm text-gray-600">

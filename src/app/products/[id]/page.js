@@ -51,6 +51,7 @@ const ProductPage = ({ params }) => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     afterChange: (current) => setSelectedImage(current),
+    dotsClass: 'slick-dots custom-dots'
   };
 
   const handleThumbnailClick = (index) => {
@@ -85,7 +86,7 @@ const ProductPage = ({ params }) => {
   const relatedProducts = products.filter(p => p.id.toString() !== params.id);
 
   return (
-    <div className="bg-amber-50 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-amber-50 min-h-screen px-2">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm">
@@ -106,7 +107,7 @@ const ProductPage = ({ params }) => {
         <div className="bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="md:flex">
             {/* Image Gallery Section */}
-            <div className="md:w-1/2 p-4">
+            <div className="md:w-1/2 md:p-4">
               <Slider ref={sliderRef} {...settings}>
                 {product.images.map((image, index) => (
                   <div key={index} className="relative aspect-square bg-gray-100 rounded-lg">
@@ -115,13 +116,13 @@ const ProductPage = ({ params }) => {
                       alt={`${product.name} - Image ${index + 1}`}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="p-2 transition-all duration-300 object-cover"
+                      className="transition-all duration-300 object-cover"
                       priority={index === 0}
                     />
                   </div>
                 ))}
               </Slider>
-              <div className="flex justify-center mt-8 space-x-2 px-4">
+              <div className="flex justify-center md:mt-8 space-x-2 px-4">
                 {product.images.map((image, index) => (
                   <button
                     key={index}
@@ -143,9 +144,9 @@ const ProductPage = ({ params }) => {
             </div>
 
             {/* Product Info Section */}
-            <div className="md:w-1/2 p-8">
+            <div className="md:w-1/2 p-2">
               <div className="flex justify-between items-start">
-                <h1 className="text-3xl font-bold text-green-800 mb-2">{product.name}</h1>
+                <h1 className="sm:text-3xl text-2xl font-semibold text-green-800 mb-2">{product.name}</h1>
                 <button className="text-red-400 hover:text-red-500">
                   <FaHeart size={24} />
                 </button>

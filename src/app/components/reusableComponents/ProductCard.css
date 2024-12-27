@@ -1,0 +1,21 @@
+.custom-dots {
+  position: absolute !important;
+  bottom: 10px !important;
+  z-index: 1;
+}
+
+.custom-dots li {
+  margin: 0 2px;
+}
+
+.custom-dots li button:before {
+  color: #fff !important;
+  opacity: 0.5;
+  font-size: 8px !important;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.custom-dots li.slick-active button:before {
+  opacity: 1;
+  color: #fff !important;
+}

@@ -147,10 +147,10 @@ const HeaderSection = () => {
     <header className={`w-full bg-amber-50 text-green-800 fixed top-0 z-50 transition-shadow duration-300 ${
       isScrolled ? 'shadow-md' : ''
     }`}>
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex justify-between items-center py-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4">
+        <div className="flex justify-between items-center py-3 sm:py-4">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-3xl uppercase tracking-wide">
+            <span className="text-2xl sm:text-3xl uppercase tracking-wide">
               <span className='text-green-800 font-bold'>Mighty</span>
               <span className="text-green-800">Grains</span>
             </span>
@@ -184,10 +184,10 @@ const HeaderSection = () => {
             <CartPreview />
           </div>
 
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="md:hidden flex items-center space-x-3 sm:space-x-4">
             <CartPreview />
             <button 
-              className="text-green-700 focus:outline-none"
+              className="text-green-700 focus:outline-none p-1.5"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -199,24 +199,24 @@ const HeaderSection = () => {
         
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <Link href="/products" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Products</Link>
+          <div className="md:hidden py-2">
+            <Link href="/products" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">Products</Link>
             
-              <Link href="/orders" className="block py-2 text-green-700 hover:text-green-600 flex items-center">
+              <Link href="/orders" className="block py-2 px-2 text-green-700 hover:text-green-600 flex items-center">
                  Orders
               </Link>
             
-            <Link href="/about" className="block py-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
-            <Link href="/contact" className="block py-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
+            <Link href="/about" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
+            <Link href="/contact" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
             {user ? (
               <button
                 onClick={handleLogout}
-                className="block py-2 text-gray-600 hover:text-red-600 transition-colors"
+                className="block py-2 px-2 text-gray-600 hover:text-red-600 transition-colors w-full text-left"
               >
                 Logout
               </button>
             ) : (
-              <Link href="/orders" className="block py-2 text-green-700 hover:text-green-600">
+              <Link href="/orders" className="block py-2 px-2 text-green-700 hover:text-green-600">
                 Login
               </Link>
             )}
