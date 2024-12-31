@@ -4,8 +4,9 @@ import SuspendedPostHogPageView from '../PostHogPageView';
 const layout = ({ children }) => {
   return (
     <div>
-      <SuspendedPostHogPageView />
-      {children}</div>
+        <SuspendedPostHogPageView />
+      {children}
+    </div>
   )
 }
 

@@ -5,7 +5,8 @@ const layout = ({ children }) => {
   return (
     <div>
       <SuspendedPostHogPageView />
-      {children}</div>
+      {children}
+    </div>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import HeaderSection from '../components/headerSection';
+import SuspendedPostHogPageView from '../PostHogPageView';
 
 export const metadata = {
     title: 'Privacy Policy | Mighty Grains',
@@ -10,6 +11,7 @@ const layout = ({ children }) => {
   return (
     <div>
         <HeaderSection />
+        <SuspendedPostHogPageView />
         {children}
         </div>
   )

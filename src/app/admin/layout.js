@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { account } from '@/appwrite/clientConfig';
 import { useEffect } from 'react';
 import { checkAdminStatus } from './actions';
+import SuspendedPostHogPageView from '../PostHogPageView';
 
 const AdminSidebar = ({ activeRoute }) => {
   const adminRoutes = [
@@ -98,6 +99,7 @@ export default function AdminLayout({ children }) {
       <div className="flex min-h-screen bg-gray-50">
         <AdminSidebar activeRoute={null} />
         <main className="flex-1 p-6 overflow-y-auto">
+        <SuspendedPostHogPageView />
           {children}
         </main>
       </div>
