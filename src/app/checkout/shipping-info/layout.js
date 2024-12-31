@@ -1,5 +1,5 @@
+import SuspendedPostHogPageView from '@/app/PostHogPageView'
 import React from 'react'
-import SuspendedPostHogPageView from '../PostHogPageView';
 
 const layout = ({ children }) => {
   return (
