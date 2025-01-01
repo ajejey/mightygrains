@@ -29,7 +29,7 @@ const ProductsPage = () => {
           </ol>
         </nav>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -42,42 +42,42 @@ const ProductsPage = () => {
             Discover our range of nutritious, traditional South Indian baby food products. 
             Crafted with love and care for your baby&apos;s healthy growth.
           </p>
-        </motion.div>
-
-        <div className="flex justify-center space-x-4 sm:space-x-8 mb-8 sm:mb-12 px-2">
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
-            <span className="text-amber-800 font-semibold text-sm sm:text-base">100% Natural</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaBaby className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
-            <span className="text-amber-800 font-semibold text-sm sm:text-base">Baby-Friendly</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <FaHeart className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
-            <span className="text-amber-800 font-semibold text-sm sm:text-base">Made with Love</span>
-          </motion.div>
         </div>
 
-        <motion.div 
+        <div className="flex justify-center space-x-4 sm:space-x-8 mb-8 sm:mb-12 px-2">
+          <div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
+            <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">100% Natural</span>
+          </div>
+          <div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
+            <FaBaby className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">Baby-Friendly</span>
+          </div>
+          <div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
+            <FaHeart className="text-2xl sm:text-3xl md:text-4xl text-green-600 mb-1 sm:mb-2" />
+            <span className="text-amber-800 font-semibold text-sm sm:text-base">Made with Love</span>
+          </div>
+        </div>
+
+        <div 
           className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2 px-2 sm:px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {products.map((product, index) => (
-            <motion.div
+            <div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <ProductCard product={product} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* <motion.div 
+        {/* <div 
           className="mt-16 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -87,7 +87,7 @@ const ProductsPage = () => {
             Get Personalized Recommendations
             <FaChevronRight className="ml-2" />
           </Link>
-        </motion.div> */}
+        </div> */}
       </div>
     </div>
   );

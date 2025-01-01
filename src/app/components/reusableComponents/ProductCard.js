@@ -12,7 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import './ProductCard.css';
 
 const truncateText = (text, maxLength = 100) => {
-  if (text.length <= maxLength) return text;
+  // if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + '...';
 };
 
@@ -61,6 +61,8 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  console.log('truncateText(product.fullDescription' , truncateText(product.fullDescription || '', 400));
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden relative group h-full flex flex-col">
       <Link href={`/products/${product.id}`} className="flex-shrink-0">
@@ -93,8 +95,7 @@ const ProductCard = ({ product }) => {
       <div className="flex-grow flex flex-col p-2 sm:p-4">
         <Link href={`/products/${product.id}`} className="flex-grow">
           <h3 className="text-sm sm:text-lg font-semibold text-amber-800 mb-1 sm:mb-2 line-clamp-2">{product.name}</h3>
-          <p className="text-gray-600 text-xs sm:text-base mb-2 sm:mb-4 line-clamp-2">
-            {truncateText(product.fullDescription || '', 40)}
+          <p dangerouslySetInnerHTML={{ __html: truncateText(product.fullDescription || '', 180) }} className="text-gray-600 text-xs sm:text-base mb-2 sm:mb-4 line-clamp-4">
           </p>
         </Link>
         

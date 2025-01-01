@@ -5,7 +5,8 @@ import { products } from '../../constants/products';
 import {
   FaShoppingCart, FaLeaf, FaWeight, FaChevronLeft, FaChevronRight,
   FaCheck, FaQuestionCircle, FaStar, FaClock, FaHeart,
-  FaWhatsapp
+  FaWhatsapp,
+  FaTruck
 } from 'react-icons/fa';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
@@ -166,19 +167,20 @@ const ProductPage = ({ params }) => {
                   ₹{product.price.amount}
                   <span className="text-sm text-gray-500 ml-2">per {product.price.unit}</span>
                 </div>
-                <div className="text-green-600 text-sm">Free delivery across Bengaluru</div>
+                <div className="text-green-600 text-sm">Free delivery across above ₹499</div>
               </div>
 
               <div className="mb-6">
-                <p className="text-amber-700 text-lg">
-                  {showFullDescription ? product.fullDescription : `${product.fullDescription.slice(0, 150)}...`}
+                <span dangerouslySetInnerHTML={{ __html: product.fullDescription }} className="block text-amber-700 text-lg">
+                </span>
+                {/* <span>
                   <button
                     onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="text-green-600 hover:text-green-700 ml-2"
+                    className="text-green-600 block hover:text-green-700 ml-2"
                   >
                     {showFullDescription ? 'Read less' : 'Read more'}
                   </button>
-                </p>
+                </span> */}
               </div>
 
               {/* Key Benefits */}
@@ -230,12 +232,16 @@ const ProductPage = ({ params }) => {
                   <FaLeaf className="text-green-600" />
                   <span>100% Natural</span>
                 </div>
+                <div className="flex items-center space-x-2 text-sm text-amber-700">
+                  <FaTruck className="text-green-600" />
+                  <span>Free delivery above ₹499</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Detailed Information Tabs */}
-          <div className="border-t">
+          {/* <div className="border-t">
             <div className="flex border-b">
               {['description', 'ingredients', 'recipe', 'faqs'].map((tab) => (
                 <button
@@ -249,10 +255,10 @@ const ProductPage = ({ params }) => {
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
               ))}
-            </div>
+            </div> */}
 
-            <div className="p-6">
-              {activeTab === 'description' && (
+            <div className="px-2 md:px-6">
+              {/* {activeTab === 'description' && (
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-green-700">About {product.name}</h3>
                   <p className="text-amber-700">{product.fullDescription}</p>
@@ -265,32 +271,42 @@ const ProductPage = ({ params }) => {
                     ))}
                   </div>
                 </div>
-              )}
+              )} */}
 
-              {activeTab === 'ingredients' && (
-                <div className="space-y-4">
+              {/* {activeTab === 'ingredients' && ( */}
+                <div className="space-y-4 pt-4">
                   <h3 className="text-lg font-semibold text-green-700">Ingredients</h3>
                   <ul className="list-disc list-inside text-amber-700 space-y-2">
                     {product.ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
+                      <p key={index} dangerouslySetInnerHTML={{ __html: ingredient }}></p>
                     ))}
                   </ul>
                   <div className="mt-6">
-                    <h4 className="text-lg font-semibold text-green-700 mb-3">Nutritional Facts</h4>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                      {Object.entries(product.nutritionalFacts).map(([key, value]) => (
-                        <div key={key} className="bg-amber-50 rounded-lg p-3 text-center">
-                          <div className="text-sm text-amber-600 capitalize">{key}</div>
-                          <div className="text-lg font-semibold text-green-700">{value}</div>
-                        </div>
-                      ))}
+                    <h4 className="text-lg font-semibold text-green-700 mb-3">Nutritional Facts <span className="text-sm">(per 10g serving)</span> </h4>
+                    <div className="overflow-x-auto md:w-1/2">
+                      <table className="w-full text-sm text-left text-amber-700">
+                        {/* <thead className="text-amber-600">
+                          <tr>
+                            <th className="px-4 py-2">Nutrient</th>
+                            <th className="px-4 py-2">Quantity</th>
+                          </tr>
+                        </thead> */}
+                        <tbody>
+                          {Object.entries(product.nutritionalFacts).map(([key, value]) => (
+                            <tr key={key} className="border-t border-amber-200">
+                              <td className="px-4 py-2">{key}</td>
+                              <td className="px-4 py-2">{value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
-              )}
+              {/* )} */}
 
-              {activeTab === 'recipe' && (
-                <div className="space-y-6">
+              {/* {activeTab === 'recipe' && ( */}
+                <div className="space-y-6 pt-4">
                   <div>
                     <h3 className="text-lg font-semibold text-green-700 mb-3">Recipe Instructions</h3>
                     <div className="grid md:grid-cols-2 gap-6">
@@ -309,20 +325,16 @@ const ProductPage = ({ params }) => {
                       </div>
                       <div>
                         <h4 className="font-medium text-amber-800 mb-2">Steps:</h4>
-                        <ol className="space-y-3">
+                        
                           {product.recipe.instructions.map((step, index) => (
-                            <li key={index} className="flex items-start text-amber-700">
-                              <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-sm mr-2 flex-shrink-0 mt-0.5">
-                                {index + 1}
-                              </span>
-                              {step}
-                            </li>
-                          ))}
-                        </ol>
+                            <p  dangerouslySetInnerHTML={{ __html: step }} key={index} className="text-amber-700" />
+                           ))}
+                       
                       </div>
                     </div>
                   </div>
-
+                  
+                  {product.bulkPreparation &&
                   <div className="border-t pt-6">
                     <h3 className="text-lg font-semibold text-green-700 mb-3">Bulk Preparation</h3>
                     <div className="grid md:grid-cols-2 gap-6">
@@ -355,11 +367,12 @@ const ProductPage = ({ params }) => {
                       </div>
                     </div>
                   </div>
+                  }
                 </div>
-              )}
+              {/* )} */}
 
-              {activeTab === 'faqs' && (
-                <div className="space-y-6">
+              {/* {activeTab === 'faqs' && ( */}
+                <div className="space-y-6 pt-4">
                   <h3 className="text-lg font-semibold text-green-700">Frequently Asked Questions</h3>
                   <div className="space-y-4">
                     {product.faqs.map((faq, index) => (
@@ -375,34 +388,34 @@ const ProductPage = ({ params }) => {
                     ))}
                   </div>
                 </div>
-              )}
+              {/* )} */}
             </div>
           </div>
 
           {/* Storage and Traditions Section */}
-          <div className="border-t p-6">
+          <div className="border-t py-4 px-2">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-lg font-semibold text-green-700 mb-4">Storage Instructions</h3>
-                <div className="bg-amber-50 rounded-lg p-4">
+                <div className="bg-amber-50 rounded-lg pt-2">
                   <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 gap-2">
                       <FaClock className="text-green-600" />
-                      <span className="text-amber-700">Storage Duration: {product.storage.duration}</span>
+                      <span className="text-amber-700"><b>Storage Duration</b> : {product.storage.duration}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 gap-2">
                       <FaLeaf className="text-green-600" />
-                      <span className="text-amber-700">Method: {product.storage.method}</span>
+                      <span className="text-amber-700"><b>Method</b> : {product.storage.method}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 gap-2">
                       <FaWeight className="text-green-600" />
-                      <span className="text-amber-700">Temperature: {product.storage.temperature}</span>
+                      <span className="text-amber-700"><b>Temperature</b> : {product.storage.temperature}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-semibold text-green-700 mb-4">Traditional Significance</h3>
                 <div className="bg-amber-50 rounded-lg p-4">
                   <p className="text-amber-700 mb-3">{product.traditions.significance}</p>
@@ -420,21 +433,21 @@ const ProductPage = ({ params }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Target Audience */}
-          <div className="border-t p-6">
+          <div className="border-t pt-4 px-2">
             <h3 className="text-lg font-semibold text-green-700 mb-4">Perfect For</h3>
             <div className="flex flex-wrap gap-4">
               {product.targetAudience.map((audience, index) => (
                 <div
                   key={index}
-                  className="bg-amber-50 rounded-lg px-4 py-2 flex items-center space-x-2"
+                  className="bg-amber-50 rounded-lg px-2 py-2 flex items-center space-x-2"
                 >
                   <FaCheck className="text-green-500" />
-                  <span className="text-amber-700">{audience}</span>
+                  <span dangerouslySetInnerHTML={{ __html: audience }} className="text-amber-700"></span>
                 </div>
               ))}
             </div>
@@ -451,12 +464,12 @@ const ProductPage = ({ params }) => {
           </div>
         </div>
       </div>
-      {showCartNotification && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-          Item added to cart successfully!
-        </div>
-      )}
-    </div>
+    //   {showCartNotification && (
+    //     <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+    //       Item added to cart successfully!
+    //     </div>
+    //   )}
+    // </div>
   );
 };
 
