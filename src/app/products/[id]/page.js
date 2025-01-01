@@ -167,7 +167,7 @@ const ProductPage = ({ params }) => {
                   ₹{product.price.amount}
                   <span className="text-sm text-gray-500 ml-2">per {product.price.unit}</span>
                 </div>
-                <div className="text-green-600 text-sm">Free delivery across above ₹499</div>
+                <div className="text-green-600 text-sm">Free delivery across India above ₹499</div>
               </div>
 
               <div className="mb-6">
