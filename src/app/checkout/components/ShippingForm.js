@@ -79,6 +79,17 @@ export default function ShippingForm({
   };
 
   useEffect(() => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.length > 0) {
+      const firstErrorField = document.getElementById(errorFields[0]);
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstErrorField.focus();
+      }
+    }
+  }, [errors]);
+
+  useEffect(() => {
     if (initialData) {
       const initialState = initialData?.userDetails?.defaultShippingAddress?.state || '';
       setFormData(prev => ({
