@@ -6,60 +6,52 @@ import User from '@/models/user';
 import { getUserByAppwriteId, createUserInDatabase } from '@/app/actions';
 import { validatePincode } from '@/utils/pincode';
 
+// Add cache for pincode validation results
+const PINCODE_CACHE = new Map();
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
 export async function createShippingInfo(appwriteId, shippingData) {
+  if (!appwriteId || !shippingData) {
+    throw new Error('Missing required parameters');
+  }
+
   try {
-    // Validate pincode
-    const pincodeValidation = await validatePincode(shippingData.pincode);
-    
-    // Connect to database
-    await connectDB();
+    // Run pincode validation and DB connection in parallel
+    const [pincodeValidation, dbConnection] = await Promise.all([
+      getPincodeValidation(shippingData.pincode),
+      connectDB()
+    ]);
 
-    // Find or create user
-    let user = await getUserByAppwriteId(appwriteId);
-    if (!user) {
-      try {
-        user = await createUserInDatabase({
-          appwriteId,
-          email: shippingData.email || null,
-          fullName: shippingData.fullName || null
-        });
-      } catch (createError) {
-        console.error('Failed to create user during shipping info:', createError);
-        throw new Error(`User creation failed: ${createError.message}`);
-      }
-    }
-
-    // Create shipping info with withInBangalore flag
-    const shippingInfo = {
-      ...shippingData,
-      withInBangalore: pincodeValidation.isWithinBangalore || false
-    };
-
-    // Update user with shipping information
-    const updatedUser = await User.findByIdAndUpdate(
-      user._id, 
+    // Find user and update in a single operation
+    const updatedUser = await User.findOneAndUpdate(
+      { appwriteId },
       {
         $set: {
           defaultShippingAddress: {
-            fullName: shippingInfo.fullName,
-            address: shippingInfo.address,
-            city: shippingInfo.city,
-            state: shippingInfo.state,
-            pincode: shippingInfo.pincode,
-            phone: shippingInfo.phone,
-            withInBangalore: shippingInfo.withInBangalore
+            fullName: shippingData.fullName,
+            address: shippingData.address,
+            city: shippingData.city,
+            state: shippingData.state,
+            pincode: shippingData.pincode,
+            phone: shippingData.phone,
+            withInBangalore: pincodeValidation.isWithinBangalore
           },
-          email: shippingInfo.email || user.email,
-          fullName: shippingInfo.fullName || user.fullName
+          email: shippingData.email,
+          fullName: shippingData.fullName,
+          appwriteId // Ensure appwriteId is set
         }
-      }, 
-      { new: true, runValidators: true }
+      },
+      { 
+        new: true, 
+        runValidators: true,
+        upsert: true, // Create if doesn't exist
+        setDefaultsOnInsert: true 
+      }
     );
 
-    // Revalidate path
+    // Revalidate path in the background
     revalidatePath('/checkout/shipping-info');
 
-    // Return validation info along with shipping data
     return {
       success: true,
       user: {
@@ -72,8 +64,26 @@ export async function createShippingInfo(appwriteId, shippingData) {
     };
   } catch (error) {
     console.error('Create shipping info error:', error);
-    throw error;
+    throw new Error(error.message || 'Failed to create shipping info');
   }
+}
+
+// Separate function for pincode validation with caching
+async function getPincodeValidation(pincode) {
+  // Check cache first
+  const cachedResult = PINCODE_CACHE.get(pincode);
+  if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_DURATION) {
+    return cachedResult.data;
+  }
+
+  // If not in cache, validate and cache the result
+  const validation = await validatePincode(pincode);
+  PINCODE_CACHE.set(pincode, {
+    data: validation,
+    timestamp: Date.now()
+  });
+
+  return validation;
 }
 
 export async function getShippingInfo(appwriteId) {

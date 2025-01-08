@@ -18,6 +18,7 @@ export default function CheckoutPage() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [shippingFormErrors, setShippingFormErrors] = useState({});
   const [userDetailsLoading, setUserDetailsLoading] = useState(true);
+  const [shippingLoading, setShippingLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -106,47 +107,47 @@ export default function CheckoutPage() {
   };
 
   const handleShippingSubmit = async (shippingData) => {
-    console.log("SHIPPING DATA", shippingData);
-    // Validate shipping information
+    // Validate shipping information before setting loading state
     const { isValid, errors } = validateShippingInfo(shippingData);
-    console.log("VALID", isValid);
-    console.log("ERRORS", errors);
     
     // If validation fails, set errors and stop submission
     if (!isValid) {
       setShippingFormErrors(errors);
-      return;
+      return; // Don't proceed with submission
     }
 
+    setShippingLoading(true);
+    
     try {
       // Clear any previous errors
       setShippingFormErrors({});
 
       // Ensure cart is not empty
-      if (cartItems.length === 0) {
+      if (!cartItems?.items?.length) {
         console.error('Your cart is empty. Please add items before checkout.');
+        router.push('/products');
         return;
       }
 
       // Create or update shipping info
-      const shippingResult = await createShippingInfo(user.$id, {
+      await createShippingInfo(user.$id, {
         ...shippingData,
         email: user.email,
         fullName: shippingData.fullName || user.name,
-        phoneNumber: shippingData.phoneNumber
       });
 
       // Sync cart for the user
       await syncUserCart(user.$id, cartItems.items);
 
-      // Clear local cart after successful sync
-      // localStorage.removeItem('cart');
-
-      // Redirect to order confirmation or next step
+      // Only redirect after all operations are complete
       router.push('/payment');
     } catch (error) {
-      console.error('Shipping submission error:', error);
-      // Handle error (show error message to user)
+      console.error('Error during checkout:', error);
+      setShippingFormErrors({ 
+        submit: 'An error occurred during checkout. Please try again.' 
+      });
+    } finally {
+      setShippingLoading(false);
     }
   };
 
@@ -173,6 +174,7 @@ export default function CheckoutPage() {
           <h2 className="text-2xl font-bold mb-4">Shipping Information</h2>
           <ShippingForm 
             onSubmit={handleShippingSubmit} 
+            shippingLoading={shippingLoading}
             initialData={{
               email: user.email,
               fullName: user.name,

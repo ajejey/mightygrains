@@ -6,30 +6,12 @@ import { ALL_STATES_AND_UTS } from '@/utils/indianStates';
 export default function ShippingForm({ 
   initialData, 
   onSubmit, 
+  shippingLoading,
   errors = {},
 }) {
 
-  console.log("INITIAL DATA", initialData);
-  const sampleInitialData = {
-    "email": "ajejey@gmail.com",
-    "fullName": "Ajey N",
-    "userDetailsLoading": false,
-    "userDetails": {
-        "_id": "6756fdc659075e388326c016",
-        "appwriteId": "6756fdc4000f92846244",
-        "email": "ajejey@gmail.com",
-        "fullName": "Ajey N",
-        "isActive": true,
-        "defaultShippingAddress": {
-            "fullName": "Ajey N",
-            "address": "Street 111",
-            "city": "Bengaluru",
-            "state": "Karataka",
-            "pincode": "560025",
-            "phone": "9887455896"
-        }
-    }
-}
+ console.log("shippingLoading", shippingLoading);
+
   const [formData, setFormData] = useState({
     fullName: initialData?.fullName || '',
     email: initialData?.email || '',
@@ -73,8 +55,11 @@ export default function ShippingForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (shippingLoading) return; // Prevent multiple submissions
+    
     onSubmit({
       ...formData,
+      state: stateInput,
     });
   };
 
@@ -108,7 +93,13 @@ export default function ShippingForm({
   }, [initialData]);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="relative space-y-4">
+      {shippingLoading && (
+        <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+          <span className="sr-only">Loading...</span>
+        </div>
+      )}
       {/* Full Name Input */}
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -306,9 +297,10 @@ export default function ShippingForm({
       <div className="pt-4">
         <button
           type="submit"
+          disabled={shippingLoading}
           className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
         >
-          Continue to Payment
+          {shippingLoading ? "Loading..." : "Continue to Payment"}
         </button>
       </div>
     </form>
