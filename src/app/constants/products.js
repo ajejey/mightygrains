@@ -151,7 +151,8 @@ export const products = [
     box_length: "30",
     box_width: "25",
     box_height: "10",
-    order_weight: "250"
+    order_weight: "250",
+    lowStock: false
   },
   {
     id: "sprouted-ragi-almonds-porridge",
@@ -295,7 +296,8 @@ export const products = [
     box_length: "30",
     box_width: "25",
     box_height: "10",
-    order_weight: "250"
+    order_weight: "250",
+    lowStock: false
   },
   {
     id: "sprouted-sathu-maavu",
@@ -453,8 +455,8 @@ export const products = [
     box_length: "30",
     box_width: "25",
     box_height: "10",
-    order_weight: "250"
-
+    order_weight: "250",
+    lowStock: true
   },
     {
       id: 'ragi-hurihittu',
@@ -588,7 +590,8 @@ export const products = [
       box_length: "30",
       box_width: "25",
       box_height: "10",
-      order_weight: "600"
+      order_weight: "600",
+      lowStock: false
     }, 
   ];
 

@@ -43,6 +43,20 @@ const ProductPage = ({ params }) => {
     return <div className="text-center py-20 text-2xl text-amber-800">Product not found</div>;
   }
 
+  const StockInfo = () => (
+    product.lowStock ? (
+      <div className="mb-6 p-4 bg-amber-50 rounded-lg border border-amber-200">
+        <div className="flex items-center space-x-2 text-amber-800">
+          <FaClock className="text-xl" />
+          <div>
+            <p className="font-bold">Sold out</p>
+            <p className="text-sm">Next batch will be ready in 3 days</p>
+          </div>
+        </div>
+      </div>
+    ) : null
+  );
+
   const settings = {
     dots: true,
     infinite: true,
@@ -152,6 +166,8 @@ const ProductPage = ({ params }) => {
                   <FaHeart size={24} />
                 </button>
               </div>
+
+              <StockInfo />
 
               <div className="mb-4 flex items-center">
                 <div className="flex text-amber-400">

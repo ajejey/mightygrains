@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
-import { FaShoppingCart, FaPlus, FaMinus } from 'react-icons/fa';
+import { FaShoppingCart, FaPlus, FaMinus, FaClock } from 'react-icons/fa';
 import { useCart } from '@/context/CartContext';
 
 // Import CSS for react-slick
@@ -95,6 +95,13 @@ const ProductCard = ({ product }) => {
       <div className="flex-grow flex flex-col p-2 sm:p-4">
         <Link href={`/products/${product.id}`} className="flex-grow">
           <h3 className="text-sm sm:text-lg font-semibold text-amber-800 mb-1 sm:mb-2 line-clamp-2">{product.name}</h3>
+          {product.lowStock && (
+            <div className="flex items-center space-x-1 mb-2">
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                <FaClock className="mr-1" /> Sold out. Next batch in 3 days
+              </span>
+            </div>
+          )}
           <p dangerouslySetInnerHTML={{ __html: truncateText(product.fullDescription || '', 180) }} className="text-gray-600 text-xs sm:text-base mb-2 sm:mb-4 line-clamp-4">
           </p>
         </Link>
