@@ -456,7 +456,7 @@ export const products = [
     box_width: "25",
     box_height: "10",
     order_weight: "250",
-    lowStock: true
+    lowStock: false
   },
     {
       id: 'ragi-hurihittu',
