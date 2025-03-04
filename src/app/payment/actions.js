@@ -124,7 +124,6 @@ export async function createOrder(orderData) {
       price: cartItem.product.price.amount
     }));
 
-
     // Calculate total amount from items
     const productsTotal = transformedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     let total = productsTotal;
@@ -137,8 +136,7 @@ export async function createOrder(orderData) {
       }
     }
 
-
-    // Find and update the existing order
+    // Create/Update order in MongoDB
     const updatedOrder = await Order.findOneAndUpdate(
       { 
         user: user._id, 
@@ -169,55 +167,8 @@ export async function createOrder(orderData) {
       throw new Error('Failed to update order');
     }
 
-    // Create Shipway order
-    try {
-      const shipwayResult = await createShipwayOrder(updatedOrder, orderData.items.map(item => item.product));
-      
-      // Update order with Shipway tracking info if available
-      if (shipwayResult.tracking_number) {
-        await Order.findByIdAndUpdate(updatedOrder._id, {
-          $set: {
-            status: 'confirmed',
-            shipwayTrackingNumber: shipwayResult.tracking_number
-          }
-        });
-      }
-    } catch (shipwayError) {
-      console.error('Shipway order creation failed:', shipwayError);
-      // Don't throw error here, as payment is already successful
-      // Instead, we can retry Shipway order creation later
-    }
-
     // Convert Mongoose document to plain object
     const orderObject = updatedOrder.toObject ? updatedOrder.toObject() : updatedOrder;
-
-    // Send order confirmation email
-    try {
-      await sendOrderConfirmationEmailViaService({
-        id: orderObject._id.toString(),
-        email: orderData.shippingInfo.email,
-        total: orderObject.total,
-        status: orderObject.status,
-        userId: orderData.userId,
-        items: transformedItems.map(item => ({
-          ...item,
-          productId: item.productId.toString()
-        })),
-        shippingAddress: {
-          fullName: orderData.shippingInfo.fullName,
-          address: orderData.shippingInfo.address,
-          city: orderData.shippingInfo.city,
-          state: orderData.shippingInfo.state,
-          pincode: orderData.shippingInfo.pincode,
-          country: orderData.shippingInfo.country,
-          phoneNumber: orderData.shippingInfo.phone,
-          email: orderData.shippingInfo.email
-        }
-      });
-    } catch (emailError) {
-      console.error('Failed to send order confirmation email:', emailError);
-      // Don't throw error for email failure
-    }
 
     // Return order as plain object
     return {
