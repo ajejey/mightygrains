@@ -4,12 +4,16 @@ import { useState } from 'react';
 import { ID } from 'appwrite';
 import { createUserInDatabase } from '@/app/actions';
 import { account } from '@/appwrite/clientConfig';
+import { FaTimes } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
-export default function AuthEmailOtpModal({ 
-  onAuthSuccess, 
-  initialEmail = '', 
-  initialFullName = '' 
+export default function AuthEmailOtpModal({
+  onAuthSuccess,
+  onCancel,
+  initialEmail = '',
+  initialFullName = ''
 }) {
+  const router = useRouter();
   const [email, setEmail] = useState(initialEmail);
   const [fullName, setFullName] = useState(initialFullName);
   const [otp, setOtp] = useState('');
@@ -69,10 +73,28 @@ export default function AuthEmailOtpModal({
     }
   };
 
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    } else {
+      // If no onCancel callback, navigate to home page
+      router.push('/');
+    }
+  };
+
   const renderContent = () => {
     if (otpSent) {
       return (
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full relative">
+          {/* Close button */}
+          <button
+            onClick={handleCancel}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="Close"
+          >
+            <FaTimes className="w-5 h-5" />
+          </button>
+
           <h2 className="text-2xl font-bold text-green-800 mb-6 text-center">
             Enter OTP
           </h2>
@@ -106,9 +128,8 @@ export default function AuthEmailOtpModal({
             <button
               type="submit"
               disabled={loading}
-              className={`w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {loading ? 'Verifying...' : 'Verify OTP'}
             </button>
@@ -130,7 +151,16 @@ export default function AuthEmailOtpModal({
     }
 
     return (
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full relative">
+        {/* Close button */}
+        <button
+          onClick={handleCancel}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+          aria-label="Close"
+        >
+          <FaTimes className="w-5 h-5" />
+        </button>
+
         <h2 className="text-2xl font-bold text-green-800 mb-6 text-center">
           Sign In / Sign Up
         </h2>
@@ -167,9 +197,8 @@ export default function AuthEmailOtpModal({
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors ${
-              loading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
           >
             {loading ? 'Sending OTP...' : 'Send OTP'}
           </button>
@@ -181,7 +210,7 @@ export default function AuthEmailOtpModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       {/* <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md mx-auto"> */}
-        {renderContent()}
+      {renderContent()}
       {/* </div> */}
     </div>
   );

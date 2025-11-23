@@ -18,7 +18,7 @@ export default function OrdersLayout({ children }) {
     const verifyAuthentication = async () => {
       try {
         const { isLoggedIn } = await checkUserSession();
-        
+
         if (!isLoggedIn) {
           setShowAuthModal(true);
         } else {
@@ -42,6 +42,12 @@ export default function OrdersLayout({ children }) {
     window.location.reload();
   };
 
+  const handleAuthCancel = () => {
+    setShowAuthModal(false);
+    // Redirect to home page
+    router.push('/');
+  };
+
   if (isLoading) {
     return <OrdersLoading />;
   }
@@ -49,8 +55,9 @@ export default function OrdersLayout({ children }) {
   if (showAuthModal) {
     return (
       // <AuthModal 
-      <AuthEmailOtpModal 
-        onAuthSuccess={handleAuthSuccess} 
+      <AuthEmailOtpModal
+        onAuthSuccess={handleAuthSuccess}
+        onCancel={handleAuthCancel}
         initialEmail=""
       />
     );

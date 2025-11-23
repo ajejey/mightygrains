@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { FaShoppingCart, FaClipboardList } from 'react-icons/fa';
+import { FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { account } from '@/appwrite/clientConfig';
@@ -14,8 +14,8 @@ const CartPreview = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (cartPreviewRef.current && 
-          !cartPreviewRef.current.contains(event.target)) {
+      if (cartPreviewRef.current &&
+        !cartPreviewRef.current.contains(event.target)) {
         setIsHovered(false);
       }
     };
@@ -27,13 +27,13 @@ const CartPreview = () => {
   }, []);
 
   return (
-    <div 
+    <div
       className="relative"
       ref={cartPreviewRef}
       onMouseEnter={() => setIsHovered(true)}
     >
-      <Link 
-        href="/cart" 
+      <Link
+        href="/cart"
         className="flex items-center space-x-1 relative"
         onClick={() => setIsHovered(false)}
       >
@@ -47,7 +47,7 @@ const CartPreview = () => {
 
       {/* Cart Preview Popup */}
       {isHovered && cart.items.length > 0 && (
-        <div 
+        <div
           className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl z-50 p-4"
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -75,8 +75,8 @@ const CartPreview = () => {
               <span className="font-medium">Total:</span>
               <span className="font-medium">₹{cart.total.toFixed(2)}</span>
             </div>
-            <Link 
-              href="/cart" 
+            <Link
+              href="/cart"
               className="w-full bg-green-500 text-white py-2 rounded-lg text-center block hover:bg-green-600 transition-colors"
               onClick={() => setIsHovered(false)}
             >
@@ -123,6 +123,19 @@ const HeaderSection = () => {
     checkLoginStatus();
   }, []);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const checkUser = async () => {
     try {
       const session = await account.get();
@@ -137,93 +150,157 @@ const HeaderSection = () => {
       await account.deleteSession('current');
       setUser(null);
       setIsLoggedIn(false);
+      setIsMenuOpen(false); // Close menu after logout
       router.push('/'); // Redirect to home page
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
 
-  return (
-    <header className={`w-full bg-amber-50 text-green-800 fixed top-0 z-50 transition-shadow duration-300 ${
-      isScrolled ? 'shadow-md' : ''
-    }`}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4">
-        <div className="flex justify-between items-center py-3 sm:py-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl sm:text-3xl uppercase tracking-wide">
-              <span className='text-green-800 font-bold'>Mighty</span>
-              <span className="text-green-800">Grains</span>
-            </span>
-          </Link>
-          
-          <div className="hidden md:flex items-center space-x-8">
-            <nav className="flex space-x-8">
-              <Link href="/products" className="text-green-700 hover:text-green-600 transition-colors">Products</Link>
-              
-                <Link href="/orders" className="text-green-700 hover:text-green-600 flex items-center">
-                   Orders
-                </Link>
-              
-              <Link href="/about" className="text-green-700 hover:text-green-600 transition-colors">About Us</Link>
-              <Link href="/contact" className="text-green-700 hover:text-green-600 transition-colors">Contact</Link>
-            </nav>
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={handleLogout}
-                  className="text-green-700 hover:text-red-600 transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <Link href="/orders" className="text-green-700 hover:text-green-600">
-                Login
-              </Link>
-            )}
-            <CartPreview />
-          </div>
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
-          <div className="md:hidden flex items-center space-x-3 sm:space-x-4">
-            <CartPreview />
-            <button 
-              className="text-green-700 focus:outline-none p-1.5"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-              </svg>
-            </button>
+  return (
+    <>
+      <header className={`w-full bg-amber-50 text-green-800 fixed top-0 z-50 transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''
+        }`}>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
+          <div className="flex justify-between items-center py-3 sm:py-4">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-2xl sm:text-3xl uppercase tracking-wide">
+                <span className='text-green-800 font-bold'>Mighty</span>
+                <span className="text-green-800">Grains</span>
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <nav className="flex space-x-8">
+                <Link href="/products" className="text-green-700 hover:text-green-600 transition-colors">Products</Link>
+                <Link href="/orders" className="text-green-700 hover:text-green-600 flex items-center">
+                  Orders
+                </Link>
+                <Link href="/about" className="text-green-700 hover:text-green-600 transition-colors">About Us</Link>
+                <Link href="/contact" className="text-green-700 hover:text-green-600 transition-colors">Contact</Link>
+              </nav>
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={handleLogout}
+                    className="text-green-700 hover:text-red-600 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link href="/orders" className="text-green-700 hover:text-green-600">
+                  Login
+                </Link>
+              )}
+              <CartPreview />
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center space-x-3 sm:space-x-4">
+              <CartPreview />
+              <button
+                className="text-green-700 focus:outline-none p-1.5 z-50"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-2">
-            <Link href="/products" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">Products</Link>
-            
-              <Link href="/orders" className="block py-2 px-2 text-green-700 hover:text-green-600 flex items-center">
-                 Orders
-              </Link>
-            
-            <Link href="/about" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">About Us</Link>
-            <Link href="/contact" className="block py-2 px-2 text-green-700 hover:text-green-600 transition-colors">Contact</Link>
+      </header>
+
+      {/* Mobile Sidebar Overlay */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300"
+          onClick={closeMenu}
+          style={{ top: 0 }}
+        />
+      )}
+
+      {/* Mobile Sliding Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-amber-50 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between p-4 border-b border-green-200">
+            <span className="text-xl font-bold text-green-800">Menu</span>
+            <button
+              onClick={closeMenu}
+              className="text-green-700 hover:text-green-900 focus:outline-none p-2"
+              aria-label="Close menu"
+            >
+              <FaTimes className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Sidebar Navigation */}
+          <nav className="flex-1 overflow-y-auto py-4">
+            <Link
+              href="/products"
+              className="block py-3 px-6 text-green-700 hover:bg-green-100 hover:text-green-900 transition-colors"
+              onClick={closeMenu}
+            >
+              Products
+            </Link>
+
+            <Link
+              href="/orders"
+              className="block py-3 px-6 text-green-700 hover:bg-green-100 hover:text-green-900 transition-colors"
+              onClick={closeMenu}
+            >
+              Orders
+            </Link>
+
+            <Link
+              href="/about"
+              className="block py-3 px-6 text-green-700 hover:bg-green-100 hover:text-green-900 transition-colors"
+              onClick={closeMenu}
+            >
+              About Us
+            </Link>
+
+            <Link
+              href="/contact"
+              className="block py-3 px-6 text-green-700 hover:bg-green-100 hover:text-green-900 transition-colors"
+              onClick={closeMenu}
+            >
+              Contact
+            </Link>
+
+            <div className="border-t border-green-200 my-2"></div>
+
             {user ? (
               <button
                 onClick={handleLogout}
-                className="block py-2 px-2 text-gray-600 hover:text-red-600 transition-colors w-full text-left"
+                className="block w-full text-left py-3 px-6 text-red-600 hover:bg-red-50 transition-colors"
               >
                 Logout
               </button>
             ) : (
-              <Link href="/orders" className="block py-2 px-2 text-green-700 hover:text-green-600">
+              <Link
+                href="/orders"
+                className="block py-3 px-6 text-green-700 hover:bg-green-100 hover:text-green-900 transition-colors"
+                onClick={closeMenu}
+              >
                 Login
               </Link>
             )}
-          </div>
-        )}
+          </nav>
+        </div>
       </div>
-    </header>
+    </>
   );
 };
 

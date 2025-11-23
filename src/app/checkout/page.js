@@ -60,6 +60,12 @@ export default function CheckoutPage() {
     setShowAuthModal(false);
   };
 
+  const handleAuthCancel = () => {
+    setShowAuthModal(false);
+    // Redirect to cart page so user can review their items
+    router.push('/cart');
+  };
+
   const validateShippingInfo = (shippingData) => {
     const errors = {};
 
@@ -109,7 +115,7 @@ export default function CheckoutPage() {
   const handleShippingSubmit = async (shippingData) => {
     // Validate shipping information before setting loading state
     const { isValid, errors } = validateShippingInfo(shippingData);
-    
+
     // If validation fails, set errors and stop submission
     if (!isValid) {
       setShippingFormErrors(errors);
@@ -117,7 +123,7 @@ export default function CheckoutPage() {
     }
 
     setShippingLoading(true);
-    
+
     try {
       // Clear any previous errors
       setShippingFormErrors({});
@@ -143,8 +149,8 @@ export default function CheckoutPage() {
       router.push('/payment');
     } catch (error) {
       console.error('Error during checkout:', error);
-      setShippingFormErrors({ 
-        submit: 'An error occurred during checkout. Please try again.' 
+      setShippingFormErrors({
+        submit: 'An error occurred during checkout. Please try again.'
       });
     } finally {
       setShippingLoading(false);
@@ -153,8 +159,9 @@ export default function CheckoutPage() {
 
   if (showAuthModal) {
     return (
-      <AuthEmailOtpModal  
+      <AuthEmailOtpModal
         onAuthSuccess={handleAuthSuccess}
+        onCancel={handleAuthCancel}
         initialEmail=""
         initialFullName=""
       />
@@ -172,15 +179,15 @@ export default function CheckoutPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h2 className="text-2xl font-bold mb-4">Shipping Information</h2>
-          <ShippingForm 
-            onSubmit={handleShippingSubmit} 
+          <ShippingForm
+            onSubmit={handleShippingSubmit}
             shippingLoading={shippingLoading}
             initialData={{
               email: user.email,
               fullName: user.name,
               userDetails: userDetails,
               userDetailsLoading: userDetailsLoading
-            }} 
+            }}
             errors={shippingFormErrors}
           />
         </div>
