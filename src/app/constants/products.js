@@ -27,7 +27,7 @@ export const products = [
     <p><b>Perfect First Food</b>: At 6 months, this porridge introduces babies to the mild sweetness of ragi with its nutty flavour, making it a gentle, enjoyable first meal.</p>`,
     description: "Sprouted Ragi Seri Porridge: The Perfect Nutritional Boost for Your Baby",
     price: {
-      amount: 99,
+      amount: 180,
       currency: "INR",
       unit: "200g"
     },
@@ -173,7 +173,7 @@ export const products = [
 `,
     description: "Sprouted Ragi + Almonds Porridge Mix: A Delicious and Wholesome Health Drink for All Ages",
     price: {
-      amount: 229,
+      amount: 300,
       currency: "INR",
       unit: "200g"
     },
@@ -307,7 +307,7 @@ export const products = [
     <p>This mix isn’t just a product; it’s my promise to you. I’ve poured love, care, and generations of wisdom into crafting this blend. It’s made with the same care as if I were feeding my family—and I wouldn’t have it any other way.</p>`,
     description: "A nourishing, wholesome food for your baby that’s gentle on their stomach and filled with essential nutrients",
     price: {
-      amount: 280,
+      amount: 320,
       currency: "INR",
       unit: "200g"
     },
@@ -485,7 +485,7 @@ export const products = [
       
       // New fields to capture additional information
       price: {
-        amount: 225,
+        amount: 450,
         currency: "INR",
         unit: "500g"
       },
